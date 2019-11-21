@@ -12,34 +12,74 @@
 
 <body class="wrapper">
   <header>
-    <h1>beeline</h1>
-
-    <div>
-
-      <img src="assets/bike.svg" alt="">
-
+    <div class="headerLogo">
+      <h1>beeline</h1>
     </div>
 
-    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Illum mollitia accusamus fugiat sint autem quibusdam
-      fugit expedita? Ratione hic aut rerum doloribus id deserunt incidunt a, ex eius nisi illum quas, repellat ab nam
-      vero nemo excepturi rem ipsam quos molestiae vel maxime voluptatibus ad. Doloribus dolor, eum ut consequuntur est
-      incidunt molestias enim dolore laborum voluptas repellat repudiandae deleniti aperiam ratione eaque. Neque fugit
-      id,
-      atque quod iure repellat voluptates, explicabo reiciendis libero illo nemo, placeat ad iste saepe quis quibusdam
-      debitis natus quidem quo molestias! Sequi cupiditate rerum, animi iure aliquam praesentium non! Odio non optio ex
-      aperiam!</p>
+    <div class="headerImage">
+      <div class="innerWrapper">
+        <img src="assets/bike.svg" alt="">
+      </div>
+    </div>
 
+    <div class="headerText">
+      <div class="innerWrapper">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus distinctio reiciendis voluptate qui possimus! Ratione, ipsam fuga, alias tenetur unde amet consequatur necessitatibus rem fugit accusamus deleniti eius consequuntur doloremque?</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa commodi maxime alias veritatis accusantium soluta, ut qui iure voluptas error vel exercitationem aliquam nostrum. Nesciunt dicta quod dolor ea impedit.</p>
+      </div>
+    </div>
   </header>
 
 
 
   <main>
     <section class="userInput">
-      <h2>Enter location</h2>
-      <h3>Starting Point</h3>
-      <h3>Ending Point</h3>
-      <h3>number of bikes</h3>
-      <h3>number of docks</h3>
+      <h2>Enter Your Location</h2>
+
+
+      <form class="userInput">
+
+        <div class="startingLocationContainer">
+          <div class="startingLocation">
+            <label for="startingLocationSelect">
+              <h3>Starting Point</h3>
+            </label>
+            <select id="startingLocationSelect">
+              <option value="placeName">Search by Place Name</option>
+              <option value="address">Search by Address</option>
+            </select>
+          </div>
+          <div class="numberOfBikes">
+            <label for="numberOfBikesInput">
+              <h3>Number of Bikes You Need</h3>
+            </label>
+            <input id="numberOfBikesInput" type="number" min="1" max="5">
+          </div>
+        </div>
+
+        <div class="endLocationContainer">
+          <div class="endLocation">
+            <label for="endLocationSelext">
+              <h3>End Point</h3>
+            </label>
+            <select id="endLocationSelect">
+              <option value="placeName">Search by Place Name</option>
+              <option value="address">Search by Address</option>
+            </select>
+          </div>
+          <div class="numberOfDocks">
+            <label for="numberOfDocksInput">
+              <h3>Number of Docks You Need</h3>
+            </label>
+            <input id="numberOfDocksInput" type="number" min="1" max="5">
+          </div>
+        </div>
+
+        <div class="submitButtonContainer">
+          <button class="submitUserInput" type="submit">Submit</button>
+        </div>
+
+      </form>
     </section>
 
 

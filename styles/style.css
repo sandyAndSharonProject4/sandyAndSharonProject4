@@ -204,6 +204,12 @@ html {
   font-size: 62.5%;
 }
 
+p {
+  font-size: 2rem;
+  letter-spacing: 1px;
+  line-height: 1.5;
+}
+
 body {
   font-family: source-sans-pro, sans-serif;
   font-weight: 400;
@@ -215,15 +221,120 @@ body {
   width: 70%;
   max-width: 1400px;
   margin: 0 auto;
+  border: 2px solid red;
 }
 
 @media (max-width: 680px) {
   .wrapper {
     width: 100%;
+    border: 2px solid blue;
   }
 }
 
 .innerWrapper {
-  width: 90%;
+  width: 80%;
   margin: 0 auto;
+}
+
+header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  width: 100%;
+}
+
+header .headerLogo {
+  width: 100%;
+}
+
+header .headerLogo h1 {
+  font-family: halyard-display, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 7.5rem;
+  color: #d6622c;
+}
+
+header .headerImage {
+  height: 60vh;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+header .headerImage img {
+  -o-object-position: center;
+     object-position: center;
+  -o-object-fit: contain;
+     object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
+
+header .headerText {
+  width: 100%;
+  padding: 75px 0;
+}
+
+form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  width: 100%;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+form .startingLocationContainer, form .endLocationContainer {
+  width: calc(50% - 25px);
+}
+
+form .startingLocationContainer .startingLocation, form .startingLocationContainer .endLocation, form .endLocationContainer .startingLocation, form .endLocationContainer .endLocation {
+  width: 100%;
+}
+
+form .startingLocationContainer .startingLocation, form .startingLocationContainer .numberOfBikes, form .endLocationContainer .startingLocation, form .endLocationContainer .numberOfBikes {
+  padding-right: 25px;
+}
+
+form .startingLocationContainer .endLocation, form .startingLocationContainer .numberOfDocks, form .endLocationContainer .endLocation, form .endLocationContainer .numberOfDocks {
+  padding-left: 25px;
+}
+
+form .startingLocationContainer input, form .startingLocationContainer select, form .endLocationContainer input, form .endLocationContainer select {
+  width: 100%;
+}
+
+form .submitButtonContainer {
+  width: 100%;
 }

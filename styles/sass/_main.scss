@@ -1,1 +1,29 @@
 @import "mediaQueries";
+
+
+form {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-between;
+    align-items: flex-start;
+    .startingLocationContainer, .endLocationContainer {
+        width: calc(50% - 25px);
+        .startingLocation, .endLocation {
+            width: 100%;
+        }
+        .startingLocation, .numberOfBikes {
+            padding-right: 25px;
+        }
+        .endLocation, .numberOfDocks {
+            padding-left: 25px;
+        }
+        input, select {
+            width: 100%;
+        }
+    }
+    .submitButtonContainer {
+        width: 100%;
+    }
+}

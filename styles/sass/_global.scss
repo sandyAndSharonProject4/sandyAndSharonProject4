@@ -22,6 +22,12 @@ html {
   font-size: 62.5%;
 }
 
+p {
+  font-size: 2rem;
+  letter-spacing: 1px;
+  line-height: 1.5;
+}
+
 body {
   @include bodyText;
   color: $black;
@@ -31,13 +37,15 @@ body {
   width: 70%;
   max-width: 1400px;
   margin: 0 auto;
+  border: 2px solid red;
   @include mobile {
     width: 100%;
+    border: 2px solid blue;
   }
 }
 
 .innerWrapper {
-  width: 90%;
+  width: 80%;
   margin: 0 auto;
 }
 
