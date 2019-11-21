@@ -8,22 +8,86 @@ form {
     width: 100%;
     justify-content: space-between;
     align-items: flex-start;
-    .startingLocationContainer, .endLocationContainer {
+
+    .startingLocationContainer,
+    .endLocationContainer {
         width: calc(50% - 25px);
-        .startingLocation, .endLocation {
+
+        .startingLocation,
+        .endLocation {
             width: 100%;
         }
-        .startingLocation, .numberOfBikes {
+
+        .startingLocation,
+        .numberOfBikes {
             padding-right: 25px;
         }
-        .endLocation, .numberOfDocks {
+
+        .endLocation,
+        .numberOfDocks {
             padding-left: 25px;
         }
-        input, select {
+
+        input,
+        select {
             width: 100%;
         }
     }
+
     .submitButtonContainer {
         width: 100%;
+        margin: 0 auto;
+        text-align: center;
+
+        .submitUserInput {
+            text-transform: uppercase;
+            @include headerText;
+            letter-spacing: 2px;
+            font-size: 2.0rem;
+            padding: 8px 40px;
+            background-color: $seaGreen;
+            color: $white;
+            border: 2px solid rgb(43, 119, 76);
+            border-radius: 8px;
+        }
     }
+
+    select {
+        background: url(../assets/arrow2.svg) no-repeat right center;
+        background-size: 2.8rem auto, 100%;
+        appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        border: 1px solid $border;
+        border-radius: 5px;
+        font-size: 1.8rem;
+        padding: 8px 0 8px 5px;
+        color: $mediumGrey;
+    }
+
+}
+
+.userInput {
+    h2 {
+        font-size: 4.0rem;
+        text-align: center;
+        color: $seaGreen;
+        letter-spacing: 4px;
+        padding-bottom: 20px;
+    }
+
+    h3 {
+        font-size: 2.3rem;
+        letter-spacing: 2px;
+        color: $seaGreen;
+        margin-bottom: 5px;
+    }
+
+    .startingLocation,
+    .numberOfBikes,
+    .numberOfDocks,
+    .endLocation {
+        margin: 30px 0;
+    }
+
 }

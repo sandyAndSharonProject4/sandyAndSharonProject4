@@ -24,8 +24,12 @@
 
     <div class="headerText">
       <div class="innerWrapper">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus distinctio reiciendis voluptate qui possimus! Ratione, ipsam fuga, alias tenetur unde amet consequatur necessitatibus rem fugit accusamus deleniti eius consequuntur doloremque?</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa commodi maxime alias veritatis accusantium soluta, ut qui iure voluptas error vel exercitationem aliquam nostrum. Nesciunt dicta quod dolor ea impedit.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus distinctio reiciendis voluptate qui
+          possimus! Ratione, ipsam fuga, alias tenetur unde amet consequatur necessitatibus rem fugit accusamus deleniti
+          eius consequuntur doloremque?</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa commodi maxime alias veritatis accusantium
+          soluta, ut qui iure voluptas error vel exercitationem aliquam nostrum. Nesciunt dicta quod dolor ea impedit.
+        </p>
       </div>
     </div>
   </header>
@@ -44,7 +48,8 @@
             <label for="startingLocationSelect">
               <h3>Starting Point</h3>
             </label>
-            <select id="startingLocationSelect">
+            <select id="startingLocationSelect" class="startingLocationSelect">
+              <option value="placeholder">Search by...</option>
               <option value="placeName">Search by Place Name</option>
               <option value="address">Search by Address</option>
             </select>
@@ -53,7 +58,14 @@
             <label for="numberOfBikesInput">
               <h3>Number of Bikes You Need</h3>
             </label>
-            <input id="numberOfBikesInput" type="number" min="1" max="5">
+            <select id="numberOfBikesInput" class="numberOfBikesInput">
+              <option value="placeholder">Select number...</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
           </div>
         </div>
 
@@ -63,6 +75,7 @@
               <h3>End Point</h3>
             </label>
             <select id="endLocationSelect">
+              <option value="placeholder">Search by...</option>
               <option value="placeName">Search by Place Name</option>
               <option value="address">Search by Address</option>
             </select>
@@ -71,7 +84,14 @@
             <label for="numberOfDocksInput">
               <h3>Number of Docks You Need</h3>
             </label>
-            <input id="numberOfDocksInput" type="number" min="1" max="5">
+            <select id="numberOfDocksInput" class="numberOfDocksInput">
+              <option value="placeholder">Select number...</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
           </div>
         </div>
 
