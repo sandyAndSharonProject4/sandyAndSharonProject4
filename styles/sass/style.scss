@@ -1,1 +1,8 @@
-@import "main.scss";
+@import "setup";
+@import "variablesMixins";
+@import "global";
+@import "header";
+@import "main";
+@import "footer";
+@import "mediaQueries";
+

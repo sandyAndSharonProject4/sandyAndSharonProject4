@@ -1,0 +1,46 @@
+@import "mediaQueries";
+
+body, div, section, img, h1, h2, h3, p, span, ul, li {
+  margin: 0;
+  padding: 0;
+}
+
+h2, h3 {
+  @include headerText;
+  text-transform: uppercase;
+}
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: $black;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  @include bodyText;
+  color: $black;
+}
+
+.wrapper {
+  width: 70%;
+  max-width: 1400px;
+  margin: 0 auto;
+  @include mobile {
+    width: 100%;
+  }
+}
+
+.innerWrapper {
+  width: 90%;
+  margin: 0 auto;
+}
+
+
+
+
