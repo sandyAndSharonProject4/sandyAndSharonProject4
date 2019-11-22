@@ -2,7 +2,7 @@ const app = {};
 
 app.apiKey = "fe35ac72901446148ba4c27a3cc2c638";
 
-$("form").on("submit", function (e) {
+$("form").on("submit", function(e) {
     e.preventDefault();
     let startingLocation = $(".startingLocationInput").val();
     let endLocation = $(".endLocationInput").val();
@@ -13,7 +13,7 @@ $("form").on("submit", function (e) {
     app.getEndLocationCoordinates(endLocation, requiredNumberOfDocks);
 });
 
-app.getStartingLocationCoordinates = function (query, requiredNumberOfBikes) {
+app.getStartingLocationCoordinates = function(query, requiredNumberOfBikes) {
     $.ajax({
         url: `https://api.opencagedata.com/geocode/v1/json?q=${query}&key=fe35ac72901446148ba4c27a3cc2c638`,
         method: "GET",
@@ -30,7 +30,7 @@ app.getStartingLocationCoordinates = function (query, requiredNumberOfBikes) {
     });
 };
 
-app.getEndLocationCoordinates = function (query, requiredNumberOfDocks) {
+app.getEndLocationCoordinates = function(query, requiredNumberOfDocks) {
     $.ajax({
         url: `https://api.opencagedata.com/geocode/v1/json?q=${query}&key=fe35ac72901446148ba4c27a3cc2c638`,
         method: "GET",
@@ -39,22 +39,22 @@ app.getEndLocationCoordinates = function (query, requiredNumberOfDocks) {
             key: `${app.apiKey}`,
             q: `${query}`,
         }
-    }).then(function (result) {
+    }).then(function(result) {
         let searchEndQueryLatitude = result.results[0].geometry.lat;
         let searchEndQueryLongitude = result.results[0].geometry.lng;
         app.getEndLocationDockData(searchEndQueryLatitude, searchEndQueryLongitude, requiredNumberOfDocks);
     });
 };
 
-app.getStartingLocationBikeData = function (searchQueryLatitude, searchQueryLongitude, requiredNumberOfBikes) {
+app.getStartingLocationBikeData = function(searchQueryLatitude, searchQueryLongitude, requiredNumberOfBikes) {
     $.ajax({
         url: `https://tor.publicbikesystem.net/ube/gbfs/v1/en/station_information`,
         method: "GET",
         dataType: "json",
-    }).then(function (bikeResult) {
+    }).then(function(bikeResult) {
         // console.log(bikeResult);
         // console.log(searchQueryLatitude, searchQueryLongitude, bikeResult);
-        bikeResult.data.stations.forEach(function (individualStation) {
+        bikeResult.data.stations.forEach(function(individualStation) {
             let stationId = individualStation.station_id;
             let startingBikeLatitude = individualStation.lat;
             let startingBikeLongitude = individualStation.lon;
@@ -65,13 +65,13 @@ app.getStartingLocationBikeData = function (searchQueryLatitude, searchQueryLong
     });
 }
 
-app.getEndLocationDockData = function (searchEndQueryLatitude, searchEndQueryLongitude, requiredNumberOfDocks) {
+app.getEndLocationDockData = function(searchEndQueryLatitude, searchEndQueryLongitude, requiredNumberOfDocks) {
     $.ajax({
         url: `https://tor.publicbikesystem.net/ube/gbfs/v1/en/station_information`,
         method: "GET",
         dataType: "json",
     }).then(function (dockResult) {
-        dockResult.data.stations.forEach(function (individualStation) {
+        dockResult.data.stations.forEach(function(individualStation) {
             let stationId = individualStation.station_id;
             let endDockLatitude = individualStation.lat;
             let endDockLongitude = individualStation.lon;
@@ -81,7 +81,7 @@ app.getEndLocationDockData = function (searchEndQueryLatitude, searchEndQueryLon
     })
 }
 
-app.calculateDistance = function (lat1, lon1, lat2, lon2, unit, stationId, stationName, requiredNumberOfBikes) {
+app.calculateDistance = function(lat1, lon1, lat2, lon2, unit, stationId, stationName, requiredNumberOfBikes) {
     let eachStationName = stationName;
     if ((lat1 == lat2) && (lon1 == lon2)) {
         return 0;
@@ -104,12 +104,12 @@ app.calculateDistance = function (lat1, lon1, lat2, lon2, unit, stationId, stati
             dist = dist * 0.8684
         }
         if (dist <= 0.5) {
-            app.getNumberOfAvailableBikes(stationId, eachStationName, requiredNumberOfBikes);
+            app.getNumberOfAvailableBikes(stationId, eachStationName, requiredNumberOfBikes, dist);
         };
     };
 };
 
-app.calculateEndDistance = function (lat1, lon1, lat2, lon2, unit, stationId, endStationName, requiredNumberOfDocks) {
+app.calculateEndDistance = function(lat1, lon1, lat2, lon2, unit, stationId, endStationName, requiredNumberOfDocks) {
     let eachEndStationName = endStationName;
     if ((lat1 == lat2) && (lon1 == lon2)) {
         return 0;
@@ -137,44 +137,60 @@ app.calculateEndDistance = function (lat1, lon1, lat2, lon2, unit, stationId, en
     };
 };
 
-app.getNumberOfAvailableBikes = function (stationId, stationName, requiredNumberOfBikes) {
+app.getNumberOfAvailableBikes = function(stationId, stationName, requiredNumberOfBikes, dist) {
     $.ajax({
         url: `https://tor.publicbikesystem.net/ube/gbfs/v1/en/station_status`,
         method: "GET",
         dataType: "json",
     }).then(function (stationResults) {
-        stationResults.data.stations.forEach(function (individualStation) {
+        stationResults.data.stations.forEach(function(individualStation) {
             let requiredNumberOfBikesInteger = parseInt(requiredNumberOfBikes);
             if (stationId === individualStation.station_id) {
                 if (requiredNumberOfBikesInteger <= individualStation.num_bikes_available) {
-                    console.log(`The station is located at ${stationName}. The station ID is ${individualStation.station_id}. We need ${requiredNumberOfBikesInteger} bikes, and this station has ${individualStation.num_bikes_available} bikes.`);
+                    console.log(`The station is located at ${stationName}. The station ID is ${individualStation.station_id}. We need ${requiredNumberOfBikesInteger} bikes, and this station has ${individualStation.num_bikes_available} bikes. The distance is ${dist}.`);
+                    const startingLocationHtml = `
+                        <div class="startingStation">
+                            <span class="stationName">Located at ${stationName}</span>
+                            <span class="bikesAvailable">Bikes Available: ${individualStation.num_bikes_available}</span>
+                            <span class="distance">${dist}</span>
+                        </div>
+                    `;
+                    $(".results").append(startingLocationHtml);
                 };
             };
         });
     });
 };
 
-app.getNumberOfAvailableDocks = function (stationId, stationName, requiredNumberOfDocks) {
+app.getNumberOfAvailableDocks = function(stationId, stationName, requiredNumberOfDocks, dist) {
     $.ajax({
         url: `https://tor.publicbikesystem.net/ube/gbfs/v1/en/station_status`,
         method: "GET",
         dataType: "json",
-    }).then(function (stationResults) {
-        stationResults.data.stations.forEach(function (individualStation) {
+    }).then(function(stationResults) {
+        stationResults.data.stations.forEach(function(individualStation) {
             let requiredNumberOfDocksInteger = parseInt(requiredNumberOfDocks);
             if (stationId === individualStation.station_id) {
                 if (requiredNumberOfDocksInteger <= individualStation.num_docks_available) {
                     console.log(`The station is located at ${stationName}. The station ID is ${individualStation.station_id}. We need ${requiredNumberOfDocksInteger} docks, and this station has ${individualStation.num_docks_available} docks.`);
+                    const endLocationHtml = `
+                        <div class="startingStation">
+                            <span class="stationName">Located at ${stationName}</span>
+                            <span class="bikesAvailable">Docks Available: ${individualStation.num_docks_available}</span>
+                            <span class="distance">${dist}</span>
+                        </div>
+                    `;
+                    $(".endResults").append(endLocationHtml);
                 };
             };
         });
     });
 };
 
-app.init = function () {
+app.init = function() {
     console.log("ready");
 };
 
-$(document).ready(function () {
+$(document).ready(function() {
     app.init();
 });
