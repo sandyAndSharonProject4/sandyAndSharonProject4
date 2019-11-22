@@ -202,6 +202,7 @@ a {
 
 html {
   font-size: 62.5%;
+  background-color: #ffeddd;
 }
 
 p {
@@ -312,6 +313,7 @@ form {
   -webkit-box-align: start;
       -ms-flex-align: start;
           align-items: flex-start;
+  margin-bottom: 50px;
 }
 
 form .startingLocationContainer,
@@ -359,7 +361,7 @@ form .submitButtonContainer .submitUserInput {
   font-style: normal;
   font-weight: 500;
   letter-spacing: 2px;
-  font-size: 2.0rem;
+  font-size: 2rem;
   padding: 8px 40px;
   background-color: #5b9f68;
   color: #fff;
@@ -367,8 +369,9 @@ form .submitButtonContainer .submitUserInput {
   border-radius: 8px;
 }
 
-form select, form input {
-  border: 1px solid #ebebe7;
+form select,
+form input {
+  border: 2px solid #ebebe7;
   border-radius: 5px;
   font-size: 1.8rem;
   padding: 8px 0 8px 5px;
@@ -378,13 +381,14 @@ form select, form input {
 form select {
   background: url(../assets/arrow2.svg) no-repeat right center;
   background-size: 2.8rem auto, 100%;
+  background-color: #fff;
   appearance: none;
   -moz-appearance: none;
   -webkit-appearance: none;
 }
 
 .userInput h2 {
-  font-size: 4.0rem;
+  font-size: 4rem;
   text-align: center;
   color: #5b9f68;
   letter-spacing: 4px;
@@ -403,4 +407,84 @@ form select {
 .userInput .numberOfDocks,
 .userInput .endLocation {
   margin: 30px 0;
+}
+
+.startingStation {
+  border: 2px solid #ebebe7;
+  background-color: #fff;
+  width: 100%;
+  margin: 30px auto;
+  padding: 40px 70px 40px 100px;
+  border-radius: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.startingStation .startingStationLocation {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 70%;
+}
+
+.startingStation .startingStationLocation .stationName {
+  font-family: halyard-display, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  color: #d6622c;
+  font-size: 2.3rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  line-height: 1.5;
+  padding-bottom: 10px;
+}
+
+.startingStation .startingStationLocation .distance {
+  font-size: 2rem;
+  color: #999;
+  letter-spacing: 1px;
+}
+
+.startingStation .startingStationBikesAvailable {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 30%;
+}
+
+.startingStation .startingStationBikesAvailable .bikesAvailable {
+  font-family: halyard-display, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: 2px;
+  font-size: 4rem;
+  color: #5b9f68;
+}
+
+.startingStation .startingStationBikesAvailable .bikesAvailableText {
+  font-size: 2rem;
+  color: #999;
+  letter-spacing: 1px;
 }
