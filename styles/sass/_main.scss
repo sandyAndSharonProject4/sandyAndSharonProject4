@@ -52,17 +52,20 @@ form {
         }
     }
 
+    select, input {
+        border: 1px solid $border;
+        border-radius: 5px;
+        font-size: 1.8rem;
+        padding: 8px 0 8px 5px;
+        color: $mediumGrey;
+    }
+
     select {
         background: url(../assets/arrow2.svg) no-repeat right center;
         background-size: 2.8rem auto, 100%;
         appearance: none;
         -moz-appearance: none;
         -webkit-appearance: none;
-        border: 1px solid $border;
-        border-radius: 5px;
-        font-size: 1.8rem;
-        padding: 8px 0 8px 5px;
-        color: $mediumGrey;
     }
 
 }

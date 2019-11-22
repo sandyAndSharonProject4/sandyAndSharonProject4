@@ -367,17 +367,20 @@ form .submitButtonContainer .submitUserInput {
   border-radius: 8px;
 }
 
+form select, form input {
+  border: 1px solid #ebebe7;
+  border-radius: 5px;
+  font-size: 1.8rem;
+  padding: 8px 0 8px 5px;
+  color: #666;
+}
+
 form select {
   background: url(../assets/arrow2.svg) no-repeat right center;
   background-size: 2.8rem auto, 100%;
   appearance: none;
   -moz-appearance: none;
   -webkit-appearance: none;
-  border: 1px solid #ebebe7;
-  border-radius: 5px;
-  font-size: 1.8rem;
-  padding: 8px 0 8px 5px;
-  color: #666;
 }
 
 .userInput h2 {
