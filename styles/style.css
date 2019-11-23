@@ -347,6 +347,7 @@ form .startingLocationContainer select,
 form .endLocationContainer input,
 form .endLocationContainer select {
   width: 100%;
+  padding-left: 10px;
 }
 
 form .submitButtonContainer {
@@ -409,7 +410,7 @@ form select {
   margin: 30px 0;
 }
 
-.startingStation {
+.startingStation, .endStation {
   border: 2px solid #ebebe7;
   background-color: #fff;
   width: 100%;
@@ -425,7 +426,7 @@ form select {
           flex-direction: row;
 }
 
-.startingStation .startingStationLocation {
+.startingStation .startingStationLocation, .startingStation .endStationLocation, .endStation .startingStationLocation, .endStation .endStationLocation {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -439,7 +440,7 @@ form select {
   width: 70%;
 }
 
-.startingStation .startingStationLocation .stationName {
+.startingStation .startingStationLocation .stationName, .startingStation .endStationLocation .stationName, .endStation .startingStationLocation .stationName, .endStation .endStationLocation .stationName {
   font-family: halyard-display, sans-serif;
   font-style: normal;
   font-weight: 500;
@@ -451,13 +452,13 @@ form select {
   padding-bottom: 10px;
 }
 
-.startingStation .startingStationLocation .distance {
+.startingStation .startingStationLocation .distance, .startingStation .endStationLocation .distance, .endStation .startingStationLocation .distance, .endStation .endStationLocation .distance {
   font-size: 2rem;
   color: #999;
   letter-spacing: 1px;
 }
 
-.startingStation .startingStationBikesAvailable {
+.startingStation .startingStationBikesAvailable, .startingStation .endStationDocksAvailable, .endStation .startingStationBikesAvailable, .endStation .endStationDocksAvailable {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -474,7 +475,7 @@ form select {
   width: 30%;
 }
 
-.startingStation .startingStationBikesAvailable .bikesAvailable {
+.startingStation .startingStationBikesAvailable .bikesAvailable, .startingStation .startingStationBikesAvailable .docksAvailable, .startingStation .endStationDocksAvailable .bikesAvailable, .startingStation .endStationDocksAvailable .docksAvailable, .endStation .startingStationBikesAvailable .bikesAvailable, .endStation .startingStationBikesAvailable .docksAvailable, .endStation .endStationDocksAvailable .bikesAvailable, .endStation .endStationDocksAvailable .docksAvailable {
   font-family: halyard-display, sans-serif;
   font-style: normal;
   font-weight: 500;
@@ -483,7 +484,7 @@ form select {
   color: #5b9f68;
 }
 
-.startingStation .startingStationBikesAvailable .bikesAvailableText {
+.startingStation .startingStationBikesAvailable .bikesAvailableText, .startingStation .startingStationBikesAvailable .docksAvailableText, .startingStation .endStationDocksAvailable .bikesAvailableText, .startingStation .endStationDocksAvailable .docksAvailableText, .endStation .startingStationBikesAvailable .bikesAvailableText, .endStation .startingStationBikesAvailable .docksAvailableText, .endStation .endStationDocksAvailable .bikesAvailableText, .endStation .endStationDocksAvailable .docksAvailableText {
   font-size: 2rem;
   color: #999;
   letter-spacing: 1px;

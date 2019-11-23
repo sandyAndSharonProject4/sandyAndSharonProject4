@@ -2,8 +2,12 @@ const app = {};
 
 app.apiKey = "fe35ac72901446148ba4c27a3cc2c638";
 
-$("form").on("submit", function(e) {
+$("form").on("submit", function (e) {
   e.preventDefault();
+  $('html').animate({
+    scrollTop: $("#results").offset().top
+  }, 2000);
+
   let startingLocation = $(".startingLocationInput").val();
   let endLocation = $(".endLocationInput").val();
   let requiredNumberOfBikes = $(".numberOfBikesInput option:selected").val();
@@ -18,6 +22,7 @@ $("form").on("submit", function(e) {
   app.getEndLocationCoordinates(endLocation, requiredNumberOfDocks);
 });
 
+
 app.getStartingLocationCoordinates = function(query, requiredNumberOfBikes) {
   $.ajax({
     url: `https://api.opencagedata.com/geocode/v1/json?q=${query}&key=fe35ac72901446148ba4c27a3cc2c638`,
@@ -28,6 +33,7 @@ app.getStartingLocationCoordinates = function(query, requiredNumberOfBikes) {
       q: `${query}`
     }
   }).then(function(result) {
+    /*  */
     let searchQueryLatitude = result.results[0].geometry.lat;
     let searchQueryLongitude = result.results[0].geometry.lng;
     console.log(searchQueryLatitude, searchQueryLongitude);
@@ -165,9 +171,9 @@ app.calculateDistance = function(
 };
 
 app.calculateEndDistance = function(
-  lat1,
   lon1,
   lat2,
+  lat1,
   lon2,
   unit,
   stationId,
@@ -225,14 +231,13 @@ app.getNumberOfAvailableBikes = function(
         if (
           requiredNumberOfBikesInteger <= individualStation.num_bikes_available
         ) {
-          //   console.log(
-          //     `The station is located at ${stationName}. The station ID is ${individualStation.station_id}. We need ${requiredNumberOfBikesInteger} bikes, and this station has ${individualStation.num_bikes_available} bikes. The distance is ${dist}.`
-          //   );
-        const startingLocationHtml = `<div class="startingStationContainer">
+          const startingLocationHtml = `<div class="startingStationContainer">
                 <div class="startingStation">
                     <div class="startingStationLocation">
                     <span class="stationName">Located at ${stationName}</span>
-                    <span class="distance"><i class="fas fa-walking"></i> Approximately ${Math.round((dist / 4) * 60)} min. walking or ${parseFloat(dist).toFixed(2)} km</span>
+                    <span class="distance"><i class="fas fa-walking"></i> Approximately ${Math.round(
+                      (dist / 4) * 60
+                    )} min. walking or ${parseFloat(dist).toFixed(2)} km</span>
                 </div>
 
                 <div class="startingStationBikesAvailable">
@@ -270,13 +275,22 @@ app.getNumberOfAvailableDocks = function(
           console.log(
             `The station is located at ${stationName}. The station ID is ${individualStation.station_id}. We need ${requiredNumberOfDocksInteger} docks, and this station has ${individualStation.num_docks_available} docks.`
           );
-          const endLocationHtml = `
-                        <div class="startingStation">
-                            <span class="stationName">Located at ${stationName}</span>
-                            <span class="bikesAvailable">Docks Available: ${individualStation.num_docks_available}</span>
-                            <span class="distance">${dist}</span>
-                        </div>
-                    `;
+          const endLocationHtml = `<div class="endStationContainer">
+                <div class="endStation">
+                    <div class="endStationLocation">
+                    <span class="stationName">Located at ${stationName}</span>
+                    <span class="distance"><i class="fas fa-walking"></i> Approximately ${Math.round(
+                      (dist / 4) * 60
+                    )} min. walking or ${parseFloat(dist).toFixed(2)} km</span>
+                </div>
+
+                <div class="endStationDocksAvailable">
+                    <span class="docksAvailable">${
+                      individualStation.num_docks_available
+                    }</span>
+                    <span class="docksAvailableText">Docks Available</span>
+                </div>
+            </div>`;
           $(".endResults").append(endLocationHtml);
         }
       }
@@ -291,4 +305,3 @@ app.init = function() {
 $(document).ready(function() {
   app.init();
 });
-
