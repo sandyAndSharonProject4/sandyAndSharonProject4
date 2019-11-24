@@ -8,10 +8,18 @@ form {
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 50px;
+  @include mobile {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 
   .startingLocationContainer,
   .endLocationContainer {
-    width: calc(50% - 25px);
+    width: calc(50% - 10px);
+    @include mobile {
+      width: 100%;
+    }
 
     .startingLocation,
     .endLocation {
@@ -21,11 +29,23 @@ form {
     .startingLocation,
     .numberOfBikes {
       padding-right: 25px;
+      @include tablet {
+        padding-right: 10px;
+      }
+      @include mobile {
+        padding-right: 0;
+      }
     }
 
     .endLocation,
     .numberOfDocks {
       padding-left: 25px;
+      @include tablet {
+        padding-left: 10px;
+      }
+      @include mobile {
+        padding-left: 0;
+      }
     }
 
     input,
@@ -66,8 +86,14 @@ form {
       padding: 8px 40px;
       background-color: $seaGreen;
       color: $white;
-      border: 2px solid rgb(43, 119, 76);
+      border: 2px solid rgb(35, 117, 104);
       border-radius: 8px;
+    }
+    .submitUserInput:hover,
+    .submitUserInput:focus {
+      background-color: rgb(35, 117, 104);
+      border: 2px solid rgb(22, 83, 60);
+      transition: all 0.1s ease;
     }
   }
 }
@@ -79,6 +105,13 @@ form {
     color: $seaGreen;
     letter-spacing: 4px;
     padding-bottom: 20px;
+    @include tablet {
+      font-size: 3.5rem;
+    }
+    @include mobile {
+      font-size: 3rem;
+      letter-spacing: 2px;
+    }
   }
 
   h3 {
@@ -86,6 +119,9 @@ form {
     letter-spacing: 2px;
     color: $seaGreen;
     margin-bottom: 10px;
+    @include smallDesktop {
+      font-size: 2rem;
+    }
   }
 
   .startingLocation,
@@ -102,10 +138,14 @@ form {
   background-color: $white;
   width: 100%;
   margin: 30px auto;
-  padding: 40px 70px 40px 100px;
+  padding: 40px 70px 40px 90px;
   border-radius: 10px;
   display: flex;
   flex-direction: row;
+  @include mobile {
+    flex-direction: column;
+    padding: 40px 10px 0 10px;
+  }
 
   .startingStationLocation,
   .endStationLocation {
@@ -113,6 +153,11 @@ form {
     flex-direction: column;
     justify-content: space-between;
     width: 70%;
+    padding-right: 10px;
+    @include mobile {
+      justify-content: center;
+      width: 100%;
+    }
 
     .stationName {
       @include headerText;
@@ -122,12 +167,18 @@ form {
       letter-spacing: 2px;
       line-height: 1.5;
       padding-bottom: 10px;
+      @include mobile {
+        text-align: center;
+      }
     }
 
     .distance {
       font-size: 2rem;
       color: $lightGrey;
       letter-spacing: 1px;
+      @include mobile {
+        text-align: center;
+      }
     }
   }
 
@@ -138,6 +189,11 @@ form {
     justify-content: center;
     align-items: center;
     width: 30%;
+    padding-left: 10px;
+    @include mobile {
+      padding: 30px 0;
+      width: 100%;
+    }
 
     .bikesAvailable,
     .docksAvailable {
@@ -152,6 +208,7 @@ form {
       font-size: 2rem;
       color: $lightGrey;
       letter-spacing: 1px;
+      text-align: center;
     }
   }
 }
@@ -163,34 +220,54 @@ form {
   justify-content: center;
   align-items: center;
   padding: 100px 0;
+  @include mobile {
+    padding: 50px 0;
+  }
   .toggleResultsContainer {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: flex-start;
     button {
-      font-size: 2.5rem;
       text-transform: uppercase;
-      letter-spacing: 1px;
-      color: $white;
+      @include headerText;
+      letter-spacing: 2px;
+      font-size: 2rem;
+      color: $lightGrey;
       padding: 10px;
       width: 250px;
-    }
-    button {
       background-color: #e9e9e9;
       border-color: #cdcdcd;
       border-style: solid;
+      @include mobile {
+        font-size: 1.6rem;
+        width: 100%;
+        padding: 10px 20px;
+      }
     }
     .startingPointButton {
-      border-radius: 15px 0 0 15px;
+      border-radius: 50px 0 0 50px;
     }
     .endPointButton {
-      border-radius: 0px 15px 15px 0px;
+      border-radius: 0px 50px 50px 0px;
     }
     button.activeButton {
       background-color: $seaGreen;
-      border: 2px solid rgb(43, 119, 76);
+      border: 2px solid rgb(35, 117, 104);
       transition: all 0.5s ease;
+      color: $white;
+    }
+    button:hover,
+    button:focus {
+      background-color: #cacaca;
+      border-color: #969696;
+      transition: all 0.1s ease;
+    }
+    button.activeButton:hover,
+    button.activeButton:focus {
+      background-color: rgb(35, 117, 104);
+      border: 2px solid rgb(22, 83, 60);
+      transition: all 0.1s ease;
     }
   }
   .toggleResultsContainerHideOnLoad {

@@ -5,7 +5,7 @@ app.apiKey = "fe35ac72901446148ba4c27a3cc2c638";
 $("form").on("submit", function (e) {
   e.preventDefault();
   $('html').animate({
-    scrollTop: $("#results").offset().top
+    scrollTop: $("#toggleResults").offset().top
   }, 2000);
 
   let startingLocation = $(".startingLocationInput").val();
@@ -219,7 +219,7 @@ app.getNumberOfAvailableBikes = function(stationId, stationName, requiredNumberO
                 <div class="startingStation">
                     <div class="startingStationLocation">
                     <span class="stationName">Located at ${stationName}</span>
-                    <span class="distance"><i class="fas fa-walking"></i> Approximately ${Math.round(
+                    <span class="distance"><i class="fas fa-walking"></i> ${Math.round(
                       (dist / 4) * 60
                     )} min. walking or ${parseFloat(dist).toFixed(2)} km</span>
                 </div>

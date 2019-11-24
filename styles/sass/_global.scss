@@ -20,7 +20,6 @@ a {
 
 html {
   font-size: 62.5%;
-  // background-color: rgb(255, 237, 221);
 }
 
 p {
@@ -38,16 +37,20 @@ body {
   width: 80%;
   max-width: 1400px;
   margin: 0 auto;
-  // border: 2px solid red;
-  @include mobile {
-    width: 100%;
-    border: 2px solid blue;
+  @include smallDesktop {
+    width: 90%;
   }
 }
 
 .innerWrapper {
   width: 80%;
   margin: 0 auto;
+  @include smallDesktop {
+    width: 90%;
+  }
+  @include tablet {
+    width: 100%;
+      }
 }
 
 

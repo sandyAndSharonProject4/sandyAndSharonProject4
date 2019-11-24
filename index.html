@@ -47,7 +47,6 @@
     <section class="userInput innerWrapper">
       <h2>Where Are You Headed?</h2>
 
-
       <form class="userInput">
 
         <div class="startingLocationContainer">
@@ -95,29 +94,31 @@
         </div>
 
         <div class="submitButtonContainer">
-          <a href="#results"><button class="submitUserInput" type="submit">Submit</button></a>
+          <a href="#toggleResults"><button class="submitUserInput" type="submit">Submit</button></a>
         </div>
       </form>
     </section>
 
     <!-- RESULTS SECTION -->
-    <section class="toggleResults">
-      <div class="toggleResultsContainer toggleResultsContainerHideOnLoad">
-        <div class="startingPoint">
-          <button class="startingPointButton activeButton">Starting Point</button>
+    <div class="resultsSection"> 
+      <section id="toggleResults" class="toggleResults">
+        <div class="toggleResultsContainer toggleResultsContainerHideOnLoad">
+          <div class="startingPoint">
+            <button class="startingPointButton activeButton">Starting Point</button>
+          </div>
+          <div class="endPoint">
+            <button class="endPointButton">End Point</button>
+          </div>
+  
         </div>
-        <div class="endPoint">
-          <button class="endPointButton">End Point</button>
-        </div>
-
-      </div>
-    </section>
-
-    <section id="results" class="results innerWrapper activeResults">
-    </section>
-
-    <section class="endResults innerWrapper">
-    </section>
+      </section>
+  
+      <section id="results" class="results innerWrapper activeResults">
+      </section>
+  
+      <section class="endResults innerWrapper">
+      </section>
+    </div>
 
   </main>
 
