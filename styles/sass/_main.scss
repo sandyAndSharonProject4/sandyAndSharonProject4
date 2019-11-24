@@ -155,3 +155,57 @@ form {
     }
   }
 }
+
+.toggleResults {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 100px 0;
+  .toggleResultsContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    button {
+      font-size: 2.5rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: $white;
+      padding: 10px;
+      width: 250px;
+    }
+    button {
+      background-color: #e9e9e9;
+      border-color: #cdcdcd;
+      border-style: solid;
+    }
+    .startingPointButton {
+      border-radius: 15px 0 0 15px;
+    }
+    .endPointButton {
+      border-radius: 0px 15px 15px 0px;
+    }
+    button.activeButton {
+      background-color: $seaGreen;
+      border: 2px solid rgb(43, 119, 76);
+      transition: all 0.5s ease;
+    }
+  }
+  .toggleResultsContainerHideOnLoad {
+    display: none;
+  }
+}
+
+.endResults {
+  display: none;
+}
+
+.activeResults {
+  display: block;
+}
+
+.inactiveResults {
+  display: none;
+}

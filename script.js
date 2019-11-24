@@ -20,8 +20,22 @@ $("form").on("submit", function (e) {
   );
   app.getStartingLocationCoordinates(startingLocation, requiredNumberOfBikes);
   app.getEndLocationCoordinates(endLocation, requiredNumberOfDocks);
+  $(".toggleResultsContainer").removeClass("toggleResultsContainerHideOnLoad");
 });
 
+$(".toggleResults").on("click", ".endPointButton", function() {
+  $(".startingPointButton").removeClass("activeButton");
+  $(".endPointButton").addClass("activeButton");
+  $(".endResults").addClass("activeResults");
+  $(".results").addClass("inactiveResults");
+});
+
+$(".toggleResults").on("click", ".startingPointButton", function() {
+  $(".endPointButton").removeClass("activeButton");
+  $(".startingPointButton").addClass("activeButton");
+  $(".endResults").removeClass("activeResults");
+  $(".results").removeClass("inactiveResults");
+});
 
 app.getStartingLocationCoordinates = function(query, requiredNumberOfBikes) {
   $.ajax({
@@ -126,16 +140,7 @@ app.getEndLocationDockData = function(
   });
 };
 
-app.calculateDistance = function(
-  lat1,
-  lon1,
-  lat2,
-  lon2,
-  unit,
-  stationId,
-  stationName,
-  requiredNumberOfBikes
-) {
+app.calculateDistance = function(lat1, lon1, lat2, lon2, unit, stationId, stationName, requiredNumberOfBikes) {
   let eachStationName = stationName;
   if (lat1 == lat2 && lon1 == lon2) {
     return 0;
@@ -170,16 +175,7 @@ app.calculateDistance = function(
   }
 };
 
-app.calculateEndDistance = function(
-  lon1,
-  lat2,
-  lat1,
-  lon2,
-  unit,
-  stationId,
-  endStationName,
-  requiredNumberOfDocks
-) {
+app.calculateEndDistance = function(lat1, lon1, lat2, lon2, unit, stationId, endStationName, requiredNumberOfDocks) {
   let eachEndStationName = endStationName;
   if (lat1 == lat2 && lon1 == lon2) {
     return 0;
@@ -204,22 +200,12 @@ app.calculateEndDistance = function(
       dist = dist * 0.8684;
     }
     if (dist <= 0.5) {
-      app.getNumberOfAvailableDocks(
-        stationId,
-        eachEndStationName,
-        requiredNumberOfDocks,
-        dist
-      );
-    }
-  }
+      app.getNumberOfAvailableDocks(stationId, eachEndStationName, requiredNumberOfDocks, dist);
+    };
+  };
 };
 
-app.getNumberOfAvailableBikes = function(
-  stationId,
-  stationName,
-  requiredNumberOfBikes,
-  dist
-) {
+app.getNumberOfAvailableBikes = function(stationId, stationName, requiredNumberOfBikes, dist) {
   $.ajax({
     url: `https://tor.publicbikesystem.net/ube/gbfs/v1/en/station_status`,
     method: "GET",
@@ -228,9 +214,7 @@ app.getNumberOfAvailableBikes = function(
     stationResults.data.stations.forEach(function(individualStation) {
       let requiredNumberOfBikesInteger = parseInt(requiredNumberOfBikes);
       if (stationId === individualStation.station_id) {
-        if (
-          requiredNumberOfBikesInteger <= individualStation.num_bikes_available
-        ) {
+        if (requiredNumberOfBikesInteger <= individualStation.num_bikes_available) {
           const startingLocationHtml = `<div class="startingStationContainer">
                 <div class="startingStation">
                     <div class="startingStationLocation">
@@ -241,9 +225,7 @@ app.getNumberOfAvailableBikes = function(
                 </div>
 
                 <div class="startingStationBikesAvailable">
-                    <span class="bikesAvailable">${
-                      individualStation.num_bikes_available
-                    }</span>
+                    <span class="bikesAvailable">${individualStation.num_bikes_available}</span>
                     <span class="bikesAvailableText">Bikes Available</span>
                 </div>
             </div>`;
@@ -269,13 +251,10 @@ app.getNumberOfAvailableDocks = function(
     stationResults.data.stations.forEach(function(individualStation) {
       let requiredNumberOfDocksInteger = parseInt(requiredNumberOfDocks);
       if (stationId === individualStation.station_id) {
-        if (
-          requiredNumberOfDocksInteger <= individualStation.num_docks_available
-        ) {
-          console.log(
-            `The station is located at ${stationName}. The station ID is ${individualStation.station_id}. We need ${requiredNumberOfDocksInteger} docks, and this station has ${individualStation.num_docks_available} docks.`
-          );
-          const endLocationHtml = `<div class="endStationContainer">
+        if (requiredNumberOfDocksInteger <= individualStation.num_docks_available) {
+          console.log(`The station is located at ${stationName}. The station ID is ${individualStation.station_id}. We need ${requiredNumberOfDocksInteger} docks, and this station has ${individualStation.num_docks_available} docks.`);
+          const endLocationHtml = `
+            <div class="endStationContainer">
                 <div class="endStation">
                     <div class="endStationLocation">
                     <span class="stationName">Located at ${stationName}</span>
@@ -292,8 +271,8 @@ app.getNumberOfAvailableDocks = function(
                 </div>
             </div>`;
           $(".endResults").append(endLocationHtml);
-        }
-      }
+        };
+      };
     });
   });
 };

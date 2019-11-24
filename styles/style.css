@@ -553,3 +553,83 @@ form .submitButtonContainer .submitUserInput {
   color: #999;
   letter-spacing: 1px;
 }
+
+.toggleResults {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 100px 0;
+}
+
+.toggleResults .toggleResultsContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+.toggleResults .toggleResultsContainer button {
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #fff;
+  padding: 10px;
+  width: 250px;
+}
+
+.toggleResults .toggleResultsContainer button {
+  background-color: #e9e9e9;
+  border-color: #cdcdcd;
+  border-style: solid;
+}
+
+.toggleResults .toggleResultsContainer .startingPointButton {
+  border-radius: 15px 0 0 15px;
+}
+
+.toggleResults .toggleResultsContainer .endPointButton {
+  border-radius: 0px 15px 15px 0px;
+}
+
+.toggleResults .toggleResultsContainer button.activeButton {
+  background-color: #62a5a3;
+  border: 2px solid #2b774c;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.toggleResults .toggleResultsContainerHideOnLoad {
+  display: none;
+}
+
+.endResults {
+  display: none;
+}
+
+.activeResults {
+  display: block;
+}
+
+.inactiveResults {
+  display: none;
+}
