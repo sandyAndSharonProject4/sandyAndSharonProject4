@@ -202,7 +202,6 @@ a {
 
 html {
   font-size: 62.5%;
-  background-color: #ffeddd;
 }
 
 p {
@@ -219,7 +218,7 @@ body {
 }
 
 .wrapper {
-  width: 70%;
+  width: 80%;
   max-width: 1400px;
   margin: 0 auto;
 }
@@ -234,6 +233,64 @@ body {
 .innerWrapper {
   width: 80%;
   margin: 0 auto;
+}
+
+nav {
+  width: 100%;
+  height: 50px;
+  display: block;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding-top: 30px;
+}
+
+nav .logo {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  justify-items: center;
+}
+
+nav .logo a {
+  font-family: halyard-display, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 4.0rem;
+  display: inline-block;
+  color: #d6622c;
+}
+
+nav .navLinks {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+nav .navLinks a {
+  font-family: halyard-display, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 2rem;
+  display: inline-block;
+  padding-left: 30px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
 }
 
 header {
@@ -255,45 +312,25 @@ header {
   width: 100%;
 }
 
-header .headerLogo {
-  width: 100%;
-}
-
-header .headerLogo h1 {
+header h1 {
   font-family: halyard-display, sans-serif;
   font-style: normal;
   font-weight: 400;
-  font-size: 7.5rem;
-  color: #d6622c;
+  font-size: 5.5rem;
+  letter-spacing: 1.2px;
+  color: #62a5a3;
+  width: 45%;
+  margin: 80px 0;
 }
 
 header .headerImage {
-  height: 60vh;
   width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-}
-
-header .headerImage img {
-  -o-object-position: center;
-     object-position: center;
-  -o-object-fit: contain;
-     object-fit: contain;
-  width: 100%;
-  height: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
 }
 
 header .headerText {
-  width: 100%;
-  padding: 75px 0;
+  margin: 120px auto;
 }
 
 form {
@@ -350,26 +387,6 @@ form .endLocationContainer select {
   padding-left: 10px;
 }
 
-form .submitButtonContainer {
-  width: 100%;
-  margin: 0 auto;
-  text-align: center;
-}
-
-form .submitButtonContainer .submitUserInput {
-  text-transform: uppercase;
-  font-family: halyard-display, sans-serif;
-  font-style: normal;
-  font-weight: 500;
-  letter-spacing: 2px;
-  font-size: 2rem;
-  padding: 8px 40px;
-  background-color: #5b9f68;
-  color: #fff;
-  border: 2px solid #2b774c;
-  border-radius: 8px;
-}
-
 form select,
 form input {
   border: 2px solid #ebebe7;
@@ -388,10 +405,30 @@ form select {
   -webkit-appearance: none;
 }
 
+form .submitButtonContainer {
+  width: 100%;
+  margin: 10px auto;
+  text-align: center;
+}
+
+form .submitButtonContainer .submitUserInput {
+  text-transform: uppercase;
+  font-family: halyard-display, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: 2px;
+  font-size: 2rem;
+  padding: 8px 40px;
+  background-color: #62a5a3;
+  color: #fff;
+  border: 2px solid #2b774c;
+  border-radius: 8px;
+}
+
 .userInput h2 {
   font-size: 4rem;
   text-align: center;
-  color: #5b9f68;
+  color: #62a5a3;
   letter-spacing: 4px;
   padding-bottom: 20px;
 }
@@ -399,18 +436,19 @@ form select {
 .userInput h3 {
   font-size: 2.3rem;
   letter-spacing: 2px;
-  color: #5b9f68;
-  margin-bottom: 5px;
+  color: #62a5a3;
+  margin-bottom: 10px;
 }
 
 .userInput .startingLocation,
 .userInput .numberOfBikes,
 .userInput .numberOfDocks,
 .userInput .endLocation {
-  margin: 30px 0;
+  margin: 30px 0 50px 0;
 }
 
-.startingStation, .endStation {
+.startingStation,
+.endStation {
   border: 2px solid #ebebe7;
   background-color: #fff;
   width: 100%;
@@ -426,7 +464,10 @@ form select {
           flex-direction: row;
 }
 
-.startingStation .startingStationLocation, .startingStation .endStationLocation, .endStation .startingStationLocation, .endStation .endStationLocation {
+.startingStation .startingStationLocation,
+.startingStation .endStationLocation,
+.endStation .startingStationLocation,
+.endStation .endStationLocation {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -440,7 +481,10 @@ form select {
   width: 70%;
 }
 
-.startingStation .startingStationLocation .stationName, .startingStation .endStationLocation .stationName, .endStation .startingStationLocation .stationName, .endStation .endStationLocation .stationName {
+.startingStation .startingStationLocation .stationName,
+.startingStation .endStationLocation .stationName,
+.endStation .startingStationLocation .stationName,
+.endStation .endStationLocation .stationName {
   font-family: halyard-display, sans-serif;
   font-style: normal;
   font-weight: 500;
@@ -452,13 +496,19 @@ form select {
   padding-bottom: 10px;
 }
 
-.startingStation .startingStationLocation .distance, .startingStation .endStationLocation .distance, .endStation .startingStationLocation .distance, .endStation .endStationLocation .distance {
+.startingStation .startingStationLocation .distance,
+.startingStation .endStationLocation .distance,
+.endStation .startingStationLocation .distance,
+.endStation .endStationLocation .distance {
   font-size: 2rem;
   color: #999;
   letter-spacing: 1px;
 }
 
-.startingStation .startingStationBikesAvailable, .startingStation .endStationDocksAvailable, .endStation .startingStationBikesAvailable, .endStation .endStationDocksAvailable {
+.startingStation .startingStationBikesAvailable,
+.startingStation .endStationDocksAvailable,
+.endStation .startingStationBikesAvailable,
+.endStation .endStationDocksAvailable {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -475,16 +525,30 @@ form select {
   width: 30%;
 }
 
-.startingStation .startingStationBikesAvailable .bikesAvailable, .startingStation .startingStationBikesAvailable .docksAvailable, .startingStation .endStationDocksAvailable .bikesAvailable, .startingStation .endStationDocksAvailable .docksAvailable, .endStation .startingStationBikesAvailable .bikesAvailable, .endStation .startingStationBikesAvailable .docksAvailable, .endStation .endStationDocksAvailable .bikesAvailable, .endStation .endStationDocksAvailable .docksAvailable {
+.startingStation .startingStationBikesAvailable .bikesAvailable,
+.startingStation .startingStationBikesAvailable .docksAvailable,
+.startingStation .endStationDocksAvailable .bikesAvailable,
+.startingStation .endStationDocksAvailable .docksAvailable,
+.endStation .startingStationBikesAvailable .bikesAvailable,
+.endStation .startingStationBikesAvailable .docksAvailable,
+.endStation .endStationDocksAvailable .bikesAvailable,
+.endStation .endStationDocksAvailable .docksAvailable {
   font-family: halyard-display, sans-serif;
   font-style: normal;
   font-weight: 500;
   letter-spacing: 2px;
   font-size: 4rem;
-  color: #5b9f68;
+  color: #62a5a3;
 }
 
-.startingStation .startingStationBikesAvailable .bikesAvailableText, .startingStation .startingStationBikesAvailable .docksAvailableText, .startingStation .endStationDocksAvailable .bikesAvailableText, .startingStation .endStationDocksAvailable .docksAvailableText, .endStation .startingStationBikesAvailable .bikesAvailableText, .endStation .startingStationBikesAvailable .docksAvailableText, .endStation .endStationDocksAvailable .bikesAvailableText, .endStation .endStationDocksAvailable .docksAvailableText {
+.startingStation .startingStationBikesAvailable .bikesAvailableText,
+.startingStation .startingStationBikesAvailable .docksAvailableText,
+.startingStation .endStationDocksAvailable .bikesAvailableText,
+.startingStation .endStationDocksAvailable .docksAvailableText,
+.endStation .startingStationBikesAvailable .bikesAvailableText,
+.endStation .startingStationBikesAvailable .docksAvailableText,
+.endStation .endStationDocksAvailable .bikesAvailableText,
+.endStation .endStationDocksAvailable .docksAvailableText {
   font-size: 2rem;
   color: #999;
   letter-spacing: 1px;
