@@ -269,7 +269,7 @@ app.getNumberOfAvailableBikes = function(stationId, stationName, requiredNumberO
           const startingLocationHtml = `<div class="startingStationContainer">
                 <div class="startingStation">
                     <div class="startingStationLocation">
-                    <span class="stationName">Located at ${stationName}</span>
+                    <a class="stationName">Located at ${stationName}</a>
                     <span class="distance"><i class="fas fa-walking"></i> ${Math.round(
                       (dist / 4) * 60
                     )} min. walking or ${parseFloat(dist).toFixed(2)} km</span>

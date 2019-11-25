@@ -11,12 +11,13 @@ nav {
 
   .logo {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-items: center;
+    justify-content: center;
 
     a {
       @include logoText;
-      font-size: 4rem;
+      font-size: 4.2rem;
       display: inline-block;
       color: $redOrange;
     }
@@ -28,7 +29,7 @@ nav {
     justify-content: center;
 
     a {
-      @include headerText;
+      @include logoText;
       font-size: 2rem;
       display: inline-block;
       padding-left: 30px;
