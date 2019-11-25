@@ -674,20 +674,26 @@ form .submitButtonContainer .submitUserInput:focus {
   }
 }
 
-.startingStation .startingStationLocation .distance,
+.startingStation .startingStationLocation .distance, .startingStation .startingStationLocation .openInMaps,
 .startingStation .endStationLocation .distance,
+.startingStation .endStationLocation .openInMaps,
 .endStation .startingStationLocation .distance,
-.endStation .endStationLocation .distance {
+.endStation .startingStationLocation .openInMaps,
+.endStation .endStationLocation .distance,
+.endStation .endStationLocation .openInMaps {
   font-size: 2rem;
   color: #999;
   letter-spacing: 1px;
 }
 
 @media (max-width: 680px) {
-  .startingStation .startingStationLocation .distance,
+  .startingStation .startingStationLocation .distance, .startingStation .startingStationLocation .openInMaps,
   .startingStation .endStationLocation .distance,
+  .startingStation .endStationLocation .openInMaps,
   .endStation .startingStationLocation .distance,
-  .endStation .endStationLocation .distance {
+  .endStation .startingStationLocation .openInMaps,
+  .endStation .endStationLocation .distance,
+  .endStation .endStationLocation .openInMaps {
     text-align: center;
   }
 }
@@ -860,4 +866,19 @@ form .submitButtonContainer .submitUserInput:focus {
 
 .inactiveResults {
   display: none;
+}
+
+.errorHandling, .resultsErrorHandling, .endResultsErrorHandling {
+  width: 100%;
+}
+
+.errorHandling span, .resultsErrorHandling span, .endResultsErrorHandling span {
+  font-family: halyard-display, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 2.5rem;
+  text-align: center;
+  color: #d6622c;
+  display: block;
+  padding-bottom: 100px;
 }

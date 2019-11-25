@@ -39,7 +39,10 @@ We keep passing requiredNumberofBikes and requiredNumberOfDocks as arguments/par
 
 $("form").on("submit", function (e) {
   e.preventDefault();
-  $('html').animate({
+  $(".results").empty();
+  $(".endResults").empty();
+  $(".errorHandling").empty();
+  $("html").animate({
     scrollTop: $("#toggleResults").offset().top
   }, 2000);
 
@@ -47,29 +50,52 @@ $("form").on("submit", function (e) {
   let endLocation = $(".endLocationInput").val();
   let requiredNumberOfBikes = $(".numberOfBikesInput option:selected").val();
   let requiredNumberOfDocks = $(".numberOfDocksInput option:selected").val();
-  console.log(
-    startingLocation,
-    endLocation,
-    requiredNumberOfBikes,
-    requiredNumberOfDocks
-  );
-  app.getStartingLocationCoordinates(startingLocation, requiredNumberOfBikes);
-  app.getEndLocationCoordinates(endLocation, requiredNumberOfDocks);
-  $(".toggleResultsContainer").removeClass("toggleResultsContainerHideOnLoad");
-});
+  console.log(startingLocation, endLocation, requiredNumberOfBikes, requiredNumberOfDocks);
+  
+  if (startingLocation === "") {
+    console.log("Please enter a starting location.");
+    let errorMessage = `<span class="errorMessage">Please enter a valid starting location.</span>`;
+    $(".errorHandling").html(errorMessage);
+  }
 
-$(".toggleResults").on("click", ".endPointButton", function() {
-  $(".startingPointButton").removeClass("activeButton");
-  $(".endPointButton").addClass("activeButton");
-  $(".endResults").addClass("activeResults");
-  $(".results").addClass("inactiveResults");
-});
+  if (endLocation === "") {
+    console.log("Please enter an ending location.");
+    let errorMessage = `<span class="errorMessage">Please enter a valid destination.</span>`;
+    $(".errorHandling").html(errorMessage);
+  }
 
-$(".toggleResults").on("click", ".startingPointButton", function() {
-  $(".endPointButton").removeClass("activeButton");
-  $(".startingPointButton").addClass("activeButton");
-  $(".endResults").removeClass("activeResults");
-  $(".results").removeClass("inactiveResults");
+  if (requiredNumberOfBikes === "placeholder") {
+    console.log("Please enter how many bikes you need.");
+    let errorMessage = `<span class="errorMessage">Please enter the amount of bikes you need.</span>`;
+    $(".errorHandling").html(errorMessage);
+  }
+
+  if (requiredNumberOfDocks === "placeholder") {
+    console.log("Please enter how many docks you need.");
+    let errorMessage = `<span class="errorMessage">Please enter the amount of docks you need.</span>`;
+    $(".errorHandling").html(errorMessage);
+  }
+
+  if (startingLocation !== "" && endLocation !== "" && requiredNumberOfBikes !== "placeholder" && requiredNumberOfDocks !== "placeholder") {
+    app.getStartingLocationCoordinates(startingLocation, requiredNumberOfBikes);
+    app.getEndLocationCoordinates(endLocation, requiredNumberOfDocks);
+    $(".toggleResultsContainer").removeClass("toggleResultsContainerHideOnLoad");
+
+    $(".toggleResults").on("click", ".endPointButton", function() {
+      $(".startingPointButton").removeClass("activeButton");
+      $(".endPointButton").addClass("activeButton");
+      $(".endResults").addClass("activeResults");
+      $(".results").addClass("inactiveResults");
+    });
+    
+    $(".toggleResults").on("click", ".startingPointButton", function() {
+      $(".endPointButton").removeClass("activeButton");
+      $(".startingPointButton").addClass("activeButton");
+      $(".endResults").removeClass("activeResults");
+      $(".results").removeClass("inactiveResults");
+    });
+    
+  }
 });
 
 /* 
@@ -86,15 +112,16 @@ app.getStartingLocationCoordinates = function(query, requiredNumberOfBikes) {
       q: `${query}`
     }
   }).then(function(result) {
-    /*  */
+    if (result.results.length === 0) {
+      let errorMessage = `
+      <div class="resultsErrorHandling"><span class="errorMessage">Our database doesn't contain any information about your starting point, please enter another location.</span></div>
+      `;
+      $(".results").html(errorMessage);
+    }
     let searchQueryLatitude = result.results[0].geometry.lat;
     let searchQueryLongitude = result.results[0].geometry.lng;
     console.log(searchQueryLatitude, searchQueryLongitude);
-    app.getStartingLocationBikeData(
-      searchQueryLatitude,
-      searchQueryLongitude,
-      requiredNumberOfBikes
-    );
+    app.getStartingLocationBikeData(searchQueryLatitude, searchQueryLongitude, requiredNumberOfBikes);
   });
 };
 
@@ -108,13 +135,15 @@ app.getEndLocationCoordinates = function(query, requiredNumberOfDocks) {
       q: `${query}`
     }
   }).then(function(result) {
+    if (result.results.length === 0) {
+      let errorMessage = `
+      <div class="endResultsErrorHandling"><span class="errorMessage">Our database doesn't contain any information about your end point, please enter another location.</span></div>
+      `;
+      $(".endResults").html(errorMessage);
+    }
     let searchEndQueryLatitude = result.results[0].geometry.lat;
     let searchEndQueryLongitude = result.results[0].geometry.lng;
-    app.getEndLocationDockData(
-      searchEndQueryLatitude,
-      searchEndQueryLongitude,
-      requiredNumberOfDocks
-    );
+    app.getEndLocationDockData(searchEndQueryLatitude, searchEndQueryLongitude, requiredNumberOfDocks);
   });
 };
 
@@ -122,11 +151,7 @@ app.getEndLocationCoordinates = function(query, requiredNumberOfDocks) {
 3. We then run two functions called getStartingLocationBikeData() and getEndLocationDockData(). These two functions make AJAX calls to the City of Toronto dataset called Station Information. This dataset contains the coordinates of every Bixi station in Toronto and its associated id. When we recieve the info back from the AJAX calls, we use the .then() method to run a forEach() on the stations array. We run every station's coordinates and it's id through a function called caculateDistance() or calculateEndDistance().
 */
 
-app.getStartingLocationBikeData = function(
-  searchQueryLatitude,
-  searchQueryLongitude,
-  requiredNumberOfBikes
-) {
+app.getStartingLocationBikeData = function(searchQueryLatitude, searchQueryLongitude, requiredNumberOfBikes) {
   $.ajax({
     url: `https://tor.publicbikesystem.net/ube/gbfs/v1/en/station_information`,
     method: "GET",
@@ -140,25 +165,12 @@ app.getStartingLocationBikeData = function(
       let startingBikeLongitude = individualStation.lon;
       let stationName = individualStation.name;
       // console.log(stationId, startingBikeLatitude, startingBikeLongitude);
-      app.calculateDistance(
-        searchQueryLatitude,
-        searchQueryLongitude,
-        startingBikeLatitude,
-        startingBikeLongitude,
-        "K",
-        stationId,
-        stationName,
-        requiredNumberOfBikes
-      );
+      app.calculateDistance(searchQueryLatitude, searchQueryLongitude, startingBikeLatitude, startingBikeLongitude, "K", stationId, stationName, requiredNumberOfBikes);
     });
   });
 };
 
-app.getEndLocationDockData = function(
-  searchEndQueryLatitude,
-  searchEndQueryLongitude,
-  requiredNumberOfDocks
-) {
+app.getEndLocationDockData = function(searchEndQueryLatitude, searchEndQueryLongitude, requiredNumberOfDocks) {
   $.ajax({
     url: `https://tor.publicbikesystem.net/ube/gbfs/v1/en/station_information`,
     method: "GET",
@@ -169,16 +181,7 @@ app.getEndLocationDockData = function(
       let endDockLatitude = individualStation.lat;
       let endDockLongitude = individualStation.lon;
       let stationName = individualStation.name;
-      app.calculateEndDistance(
-        searchEndQueryLatitude,
-        searchEndQueryLongitude,
-        endDockLatitude,
-        endDockLongitude,
-        "K",
-        stationId,
-        stationName,
-        requiredNumberOfDocks
-      );
+      app.calculateEndDistance(searchEndQueryLatitude, searchEndQueryLongitude, endDockLatitude, endDockLongitude,"K", stationId, stationName, requiredNumberOfDocks);
     });
   });
 };
@@ -196,9 +199,7 @@ app.calculateDistance = function(lat1, lon1, lat2, lon2, unit, stationId, statio
     let radlat2 = (Math.PI * lat2) / 180;
     let theta = lon1 - lon2;
     let radtheta = (Math.PI * theta) / 180;
-    let dist =
-      Math.sin(radlat1) * Math.sin(radlat2) +
-      Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+    let dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
     if (dist > 1) {
       dist = 1;
     }
@@ -212,12 +213,7 @@ app.calculateDistance = function(lat1, lon1, lat2, lon2, unit, stationId, statio
       dist = dist * 0.8684;
     }
     if (dist <= 0.5) {
-      app.getNumberOfAvailableBikes(
-        stationId,
-        eachStationName,
-        requiredNumberOfBikes,
-        dist
-      );
+      app.getNumberOfAvailableBikes(stationId, eachStationName, requiredNumberOfBikes, dist, lat2, lon2);
     }
   }
 };
@@ -247,7 +243,7 @@ app.calculateEndDistance = function(lat1, lon1, lat2, lon2, unit, stationId, end
       dist = dist * 0.8684;
     }
     if (dist <= 0.5) {
-      app.getNumberOfAvailableDocks(stationId, eachEndStationName, requiredNumberOfDocks, dist);
+      app.getNumberOfAvailableDocks(stationId, eachEndStationName, requiredNumberOfDocks, dist, lat2, lon2);
     };
   };
 };
@@ -256,7 +252,7 @@ app.calculateEndDistance = function(lat1, lon1, lat2, lon2, unit, stationId, end
 5. getNumberOfAvailableBikes() and getNumberOfAvailableDocks() are functions that make an AJAX call to another City of Toronto dataset called Station Status. Since we already have the id of every station that's within a 0.5km distance of our start/end points, we use a forEach() to reiterate through every item in the stations array we get back from the AJAX call. If the id of the station that's within a 0.5km radius matches the id of one of the stations in the station array, then we run another if statement. If the variable we have saved as requiredNumberOfBikes or requiredNumberOfDocks is equal to or less than the num_bikes_available property or num_docks_available property of the item in the stations array, then we have a match of a station that is within 0.5km and also has at minimum the amount of bikes or docks the user needs. We then append this station to the page.
 */
 
-app.getNumberOfAvailableBikes = function(stationId, stationName, requiredNumberOfBikes, dist) {
+app.getNumberOfAvailableBikes = function(stationId, stationName, requiredNumberOfBikes, dist, startingBikeLatitude, startingBikeLongitude) {
   $.ajax({
     url: `https://tor.publicbikesystem.net/ube/gbfs/v1/en/station_status`,
     method: "GET",
@@ -269,14 +265,15 @@ app.getNumberOfAvailableBikes = function(stationId, stationName, requiredNumberO
           const startingLocationHtml = `<div class="startingStationContainer">
                 <div class="startingStation">
                     <div class="startingStationLocation">
-                    <a class="stationName">Located at ${stationName}</a>
-                    <span class="distance"><i class="fas fa-walking"></i> ${Math.round(
+                    <span class="stationName"><span class="visuallyHidden">There is a Bixi station </span>Located at ${stationName}</span>
+                    <span class="distance"><i class="fas fa-walking"></i><span class="visuallyHidden">It's approximately</span> ${Math.round(
                       (dist / 4) * 60
                     )} min. walking or ${parseFloat(dist).toFixed(2)} km</span>
+                    <a href="https://www.google.com/maps/search/?api=1&query=${startingBikeLatitude},${startingBikeLongitude}" class="openInMaps" target="_blank"><i class="fas fa-map-marker-alt"></i> Open in Google Maps</a>
                 </div>
 
                 <div class="startingStationBikesAvailable">
-                    <span class="bikesAvailable">${individualStation.num_bikes_available}</span>
+                    <span class="bikesAvailable"><span class="visuallyHidden">There are this many bikes available: </span>${individualStation.num_bikes_available}</span>
                     <span class="bikesAvailableText">Bikes Available</span>
                 </div>
             </div>`;
@@ -288,12 +285,7 @@ app.getNumberOfAvailableBikes = function(stationId, stationName, requiredNumberO
   });
 };
 
-app.getNumberOfAvailableDocks = function(
-  stationId,
-  stationName,
-  requiredNumberOfDocks,
-  dist
-) {
+app.getNumberOfAvailableDocks = function(stationId, stationName, requiredNumberOfDocks, dist, endDockLatitude, endDockLongitude) {
   $.ajax({
     url: `https://tor.publicbikesystem.net/ube/gbfs/v1/en/station_status`,
     method: "GET",
@@ -308,16 +300,15 @@ app.getNumberOfAvailableDocks = function(
             <div class="endStationContainer">
                 <div class="endStation">
                     <div class="endStationLocation">
-                    <span class="stationName">Located at ${stationName}</span>
-                    <span class="distance"><i class="fas fa-walking"></i> Approximately ${Math.round(
+                    <span class="stationName"><span class="visuallyHidden">There is a station</span> Located at ${stationName}</span>
+                    <span class="distance"><i class="fas fa-walking"></i><span class="visuallyHidden">The station is</span> Approximately ${Math.round(
                       (dist / 4) * 60
                     )} min. walking or ${parseFloat(dist).toFixed(2)} km</span>
+                    <a href="https://www.google.com/maps/search/?api=1&query=${endDockLatitude},${endDockLongitude}" class="openInMaps" target="_blank"><i class="fas fa-map-marker-alt"></i> Open in Google Maps</a>
                 </div>
 
                 <div class="endStationDocksAvailable">
-                    <span class="docksAvailable">${
-                      individualStation.num_docks_available
-                    }</span>
+                    <span class="docksAvailable"><span class="visuallyHidden">There are this many docks available: </span>${individualStation.num_docks_available}</span>
                     <span class="docksAvailableText">Docks Available</span>
                 </div>
             </div>`;
