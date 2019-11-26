@@ -1,5 +1,9 @@
 @import "mediaQueries";
 
+body {
+  overflow-x: hidden;
+}
+
 body, div, section, img, h1, h2, h3, p, span, ul, li {
   margin: 0;
   padding: 0;
@@ -53,6 +57,12 @@ body {
       }
 }
 
+.mobileOnly {
+  display: none;
+  @include tablet {
+    display: block;
+  }
+}
 
 
 

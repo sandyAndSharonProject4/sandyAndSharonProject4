@@ -27,6 +27,9 @@ nav {
     display: flex;
     align-items: center;
     justify-content: center;
+    @include tablet {
+      display: none;
+    }
 
     a {
       @include logoText;
@@ -97,3 +100,47 @@ header {
     margin: 120px auto;
   }
 }
+
+.openMenuButton, .exitMenuButton {
+  border: 0;
+  background-color: transparent;
+  height: 50px;
+  i {
+    font-size: 4rem;
+    color: $redOrange;
+  }
+}
+
+.slideOutMobileNav {
+  width: 0px;
+  height: 100vh;
+  z-index: 100;
+  position: fixed;
+  top: 0;
+  right: 0px;
+  background-color: $white;
+  visibility: hidden;
+  transition: all 0.5s ease;
+  ul {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin-top: -50px;
+    a {
+      @include logoText;
+      font-size: 3rem;
+      color: $redOrange;
+      padding: 20px 0;
+    }
+  }
+}
+
+.activeMenu {
+  width: 300px;
+  visibility: visible;
+  transition: all 0.5s ease;
+}
+

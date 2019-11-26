@@ -334,6 +334,14 @@ app.init = function() {
       })
     }
   });
+  
+  $(".openMenuButton").on("click", function() {
+    $(".slideOutMobileNav").addClass("activeMenu");
+  });
+
+  $(".exitMenuButton").on("click", function() {
+    $(".slideOutMobileNav").removeClass("activeMenu");
+  });
 };
 
 $(document).ready(function() {
