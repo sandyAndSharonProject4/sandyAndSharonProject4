@@ -285,16 +285,16 @@ app.init = function() {
       let errorMessage = `<span class="errorMessage">Please enter a valid destination.</span>`;
       $(".errorHandling").html(errorMessage);
     }
-  
+    if (requiredNumberOfDocks === "placeholder") {
+      let errorMessage = `<span class="errorMessage">Please enter the amount of docks you need.</span>`;
+      $(".errorHandling").html(errorMessage);
+    }
+    
     if (requiredNumberOfBikes === "placeholder") {
       let errorMessage = `<span class="errorMessage">Please enter the amount of bikes you need.</span>`;
       $(".errorHandling").html(errorMessage);
     }
   
-    if (requiredNumberOfDocks === "placeholder") {
-      let errorMessage = `<span class="errorMessage">Please enter the amount of docks you need.</span>`;
-      $(".errorHandling").html(errorMessage);
-    }
   
   
     if (startingLocation !== "" && endLocation !== "" && requiredNumberOfBikes !== "placeholder" && requiredNumberOfDocks !== "placeholder") {

@@ -33,7 +33,7 @@ nav {
 
     a {
       @include logoText;
-      font-size: 2rem;
+      font-size: 2.2rem;
       display: inline-block;
       margin-left: 30px;
       text-transform: uppercase;
@@ -76,31 +76,44 @@ header {
     max-width: 1600px;
     margin: 0 auto;
     @include tablet {
-      overflow: hidden;
-    }
-    img {
-        @include tablet {
-            width: 130%;
-            object-fit: cover;
-            object-position: center;
-            margin-left: -15%;
-          }
-        @include mobile {
-            width: 160%;
-            margin-left: -35%;
-          }
-          @include smallMobile {
-            width: 200%;
-            margin-left: -55%;
-          }
-    }
+    overflow: hidden;
   }
-
-  .headerText {
-    margin: 120px auto;
+  img {
+    @include tablet {
+        width: 130%;
+        object-fit: cover;
+        object-position: center;
+        margin-left: -15%;
+      }
+      @include mobile {
+        width: 160%;
+        margin-left: -35%;
+      }
+      @include smallMobile {
+      width: 200%;
+      margin-left: -55%;
+    }
   }
 }
-
+  .headerText {
+    margin: 90px auto;
+    p {
+      margin: 30px 0;
+      font-size: 2.2rem;
+      line-height: 1.6;
+      letter-spacing: 2px;
+      @include smallMobile {
+      font-size: 1.8rem;
+    }
+    }
+     @include smallMobile {
+      margin: 50px auto;
+    }
+  }
+}
+.exitMenuButton{
+  padding-left: 20px;
+}
 .openMenuButton, .exitMenuButton {
   border: 0;
   background-color: transparent;
@@ -119,21 +132,22 @@ header {
   top: 0;
   right: 0px;
   background-color: $white;
-  visibility: hidden;
   transition: all 0.5s ease;
+  visibility: hidden;
   ul {
     display: flex;
     flex-direction: column;
-    height: 100%;
-    width: 100%;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
-    margin-top: -50px;
+    height: 150px;
+    width: 50%;
     a {
+      position: absolute;
+      text-align: center;
+      width: 50%;
       @include logoText;
       font-size: 3rem;
       color: $redOrange;
-      padding: 20px 0;
     }
   }
 }
@@ -141,6 +155,6 @@ header {
 .activeMenu {
   width: 300px;
   visibility: visible;
-  transition: all 0.5s ease;
+  box-shadow: 10px 0px 50px $lightGrey;
 }
 

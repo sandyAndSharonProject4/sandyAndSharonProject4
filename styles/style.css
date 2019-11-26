@@ -323,7 +323,7 @@ nav .navLinks a {
   font-family: halyard-display, sans-serif;
   font-style: normal;
   font-weight: 400;
-  font-size: 2rem;
+  font-size: 2.2rem;
   display: inline-block;
   margin-left: 30px;
   text-transform: uppercase;
@@ -417,7 +417,30 @@ header .headerImage {
 }
 
 header .headerText {
-  margin: 120px auto;
+  margin: 90px auto;
+}
+
+header .headerText p {
+  margin: 30px 0;
+  font-size: 2.2rem;
+  line-height: 1.6;
+  letter-spacing: 2px;
+}
+
+@media (max-width: 480px) {
+  header .headerText p {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  header .headerText {
+    margin: 50px auto;
+  }
+}
+
+.exitMenuButton {
+  padding-left: 20px;
 }
 
 .openMenuButton, .exitMenuButton {
@@ -439,9 +462,9 @@ header .headerText {
   top: 0;
   right: 0px;
   background-color: #fff;
-  visibility: hidden;
   -webkit-transition: all 0.5s ease;
   transition: all 0.5s ease;
+  visibility: hidden;
 }
 
 .slideOutMobileNav ul {
@@ -452,34 +475,35 @@ header .headerText {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  height: 100%;
-  width: 100%;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  margin-top: -50px;
+  height: 150px;
+  width: 50%;
 }
 
 .slideOutMobileNav ul a {
+  position: absolute;
+  text-align: center;
+  width: 50%;
   font-family: halyard-display, sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 3rem;
   color: #d6622c;
-  padding: 20px 0;
 }
 
 .activeMenu {
   width: 300px;
   visibility: visible;
-  -webkit-transition: all 0.5s ease;
-  transition: all 0.5s ease;
+  -webkit-box-shadow: 10px 0px 50px #999;
+          box-shadow: 10px 0px 50px #999;
 }
 
 form {
+  white-space: nowrap;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -657,6 +681,13 @@ form .submitButtonContainer .submitUserInput:focus {
   }
 }
 
+@media (max-width: 480px) {
+  .userInput h2 {
+    font-size: 2.5rem;
+    letter-spacing: 2px;
+  }
+}
+
 .userInput h3 {
   font-size: 2.3rem;
   letter-spacing: 2px;
@@ -756,6 +787,7 @@ form .submitButtonContainer .submitUserInput:focus {
   .endStation .startingStationLocation .stationName,
   .endStation .endStationLocation .stationName {
     text-align: center;
+    padding-bottom: 15px;
   }
 }
 
@@ -769,6 +801,7 @@ form .submitButtonContainer .submitUserInput:focus {
   font-size: 2rem;
   color: #999;
   letter-spacing: 1px;
+  margin-bottom: 10px;
 }
 
 @media (max-width: 680px) {
@@ -809,7 +842,7 @@ form .submitButtonContainer .submitUserInput:focus {
   .startingStation .endStationDocksAvailable,
   .endStation .startingStationBikesAvailable,
   .endStation .endStationDocksAvailable {
-    padding: 30px 0;
+    padding: 0 0 30px 0;
     width: 100%;
   }
 }
@@ -864,7 +897,8 @@ form .submitButtonContainer .submitUserInput:focus {
 
 @media (max-width: 680px) {
   .toggleResults {
-    padding: 50px 0;
+    padding: 0;
+    margin: 40px 0 0 0;
   }
 }
 
@@ -895,8 +929,7 @@ form .submitButtonContainer .submitUserInput:focus {
   padding: 10px;
   width: 250px;
   background-color: #e9e9e9;
-  border-color: #cdcdcd;
-  border-style: solid;
+  border: 2px solid #cdcdcd;
 }
 
 @media (max-width: 680px) {
@@ -971,7 +1004,7 @@ form .submitButtonContainer .submitUserInput:focus {
 footer {
   width: 100%;
   margin: 0 auto;
-  padding: 10px 0;
+  padding: 10px 20px;
   text-align: center;
   background-color: #a3caa9;
 }
@@ -979,4 +1012,10 @@ footer {
 footer small {
   color: #fff;
   font-size: 1.7rem;
+}
+
+@media (max-width: 680px) {
+  footer small {
+    font-size: 1.4rem;
+  }
 }
