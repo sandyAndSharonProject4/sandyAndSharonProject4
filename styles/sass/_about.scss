@@ -1,0 +1,21 @@
+.aboutUs {
+  width: 50%;
+  margin: 0 auto;
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: space-between;
+  
+  .aboutSandy,
+  .aboutSharon {
+    padding-bottom: 40px;
+    img {
+      width: 20%;
+    }
+    display: flex;
+    flex-direction: row;
+    p {
+      padding: 50px 0 50px 20px;
+    }
+  }
+}
