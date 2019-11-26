@@ -32,92 +32,6 @@ const app = {};
 app.apiKey = "fe35ac72901446148ba4c27a3cc2c638";
 
 /* 
-1. The app begins with an event listener. When the user submits the form, we prevent the default action of the form automatically refreshing the page. Then we save the value of all the user's different inputs to variables (their starting location, how many bikes they need, their destination, and how many docks they need). We pass the startingLocation and requiredNumberOfBikes variables to a function called getStartingLocationCoordinates(), and the endLocation and requiredNumberOfDocks variables to a function called getEndLocationCoordinates(). We also remove the class that hides the results.
-
-We keep passing requiredNumberofBikes and requiredNumberOfDocks as arguments/parameters to all the functions we use to find the rest of the data we need because as of now, these variables are scoped to this initial event listener and we want to be able to access them in other places, because it affects the results of what we show the user depending on how many bikes/docks they need and how many are available.
-*/
-
-$("form").on("submit", function (e) {
-  e.preventDefault();
-  $(".results").empty();
-  $(".endResults").empty();
-  $(".errorHandling").empty();
-  $("html").animate({
-    scrollTop: $("#toggleResults").offset().top
-  }, 2000);
-
-  let startingLocation = $(".startingLocationInput").val();
-  let endLocation = $(".endLocationInput").val();
-  let requiredNumberOfBikes = $(".numberOfBikesInput option:selected").val();
-  let requiredNumberOfDocks = $(".numberOfDocksInput option:selected").val();
-  console.log(startingLocation, endLocation, requiredNumberOfBikes, requiredNumberOfDocks);
-  
-  if (startingLocation === "") {
-    console.log("Please enter a starting location.");
-    let errorMessage = `<span class="errorMessage">Please enter a valid starting location.</span>`;
-    $(".errorHandling").html(errorMessage);
-  }
-
-  if (endLocation === "") {
-    console.log("Please enter an ending location.");
-    let errorMessage = `<span class="errorMessage">Please enter a valid destination.</span>`;
-    $(".errorHandling").html(errorMessage);
-  }
-
-  if (requiredNumberOfBikes === "placeholder") {
-    console.log("Please enter how many bikes you need.");
-    let errorMessage = `<span class="errorMessage">Please enter the amount of bikes you need.</span>`;
-    $(".errorHandling").html(errorMessage);
-  }
-
-  if (requiredNumberOfDocks === "placeholder") {
-    console.log("Please enter how many docks you need.");
-    let errorMessage = `<span class="errorMessage">Please enter the amount of docks you need.</span>`;
-    $(".errorHandling").html(errorMessage);
-  }
-
-
-  if (startingLocation !== "" && endLocation !== "" && requiredNumberOfBikes !== "placeholder" && requiredNumberOfDocks !== "placeholder") {
-    app.getStartingLocationCoordinates(startingLocation, requiredNumberOfBikes);
-    app.getEndLocationCoordinates(endLocation, requiredNumberOfDocks);
-    $(".toggleResultsContainer").removeClass("toggleResultsContainerHideOnLoad");
-
-    $(".toggleResults").on("click", ".endPointButton", function () {
-      $(".noDocksError").show();
-      $(".startingPointButton").removeClass("activeButton");
-      $(".endPointButton").addClass("activeButton");
-      $(".endResults").addClass("activeResults");
-      $(".results").addClass("inactiveResults");
-      $(".noDocksError").empty();
-      $(".noBikesError").empty();
-      if ($(".endPointButton").hasClass("activeButton") && $(".endResults").is(":empty")) {
-        const endResultsError = `
-        <span>There are no docks available near this location.</span>
-        `
-        $(".noDocksError").append(endResultsError);
-      }
-    });
-    
-    $(".toggleResults").on("click", ".startingPointButton", function () {
-      $(".endPointButton").removeClass("activeButton");
-      $(".startingPointButton").addClass("activeButton");
-      $(".endResults").removeClass("activeResults");
-      $(".results").removeClass("inactiveResults");
-      $(".noBikesError").empty();
-      $(".noDocksError").empty();
-      if ($(".startingPointButton").hasClass("activeButton") && $(".results").is(":empty")) {
-        console.log("hiding the no bikes error");
-        const resultsError = `
-        <span>There are no bikes available near this location.</span>
-        `
-        $(".noBikesError").append(resultsError);
-      } 
-    })
-  }
-});
-
-
-/* 
 2. We run two functions called getStartingLocationCoordinates() and getEndLocationCoordinates() to find the longitutde and latitude of both of the user's inputs. These two functions make AJAX calls to the Open Cage Data API. We use the first item in the results array because the API always shows the most relevant match in position 0. We save the values of geometry.lat and geometry.lng properties to variables called searchQueryLatitude and searchQueryLongitude for the starting location. For the end point, we save the values as searchEndQueryLatitude and searchEndQueryLongitude. We then pass these variables to functions called getStartingLocationBikeData() and getEndLocationDockData() respectively.
 */
 
@@ -300,7 +214,7 @@ app.getNumberOfAvailableBikes = function(stationId, stationName, requiredNumberO
         if (requiredNumberOfBikesInteger <= individualStation.num_bikes_available) {
           const startingLocationHtml = `<div class="startingStationContainer">
                 <div class="startingStation">
-                    <div class="startingStationLocation">
+                    <div class="startingStationLocation" tabIndex="0">
                     <span class="stationName"><span class="visuallyHidden">There is a Bixi station </span>Located at ${stationName}</span>
                     <span class="distance"><i class="fas fa-walking"></i><span class="visuallyHidden">It's approximately</span> ${Math.round(
                       (dist / 4) * 60
@@ -308,7 +222,7 @@ app.getNumberOfAvailableBikes = function(stationId, stationName, requiredNumberO
                     <a href="https://www.google.com/maps/search/?api=1&query=${startingBikeLatitude},${startingBikeLongitude}" class="openInMaps" target="_blank"><i class="fas fa-map-marker-alt"></i> Open in Google Maps</a>
                 </div>
 
-                <div class="startingStationBikesAvailable">
+                <div class="startingStationBikesAvailable" tabIndex="0">
                     <span class="bikesAvailable"><span class="visuallyHidden">There are this many bikes available: </span>${individualStation.num_bikes_available}</span>
                     <span class="bikesAvailableText">Bikes Available</span>
                 </div>
@@ -341,7 +255,7 @@ app.getNumberOfAvailableDocks = function(stationId, stationName, requiredNumberO
           const endLocationHtml = `
             <div class="endStationContainer">
                 <div class="endStation">
-                    <div class="endStationLocation">
+                    <div class="endStationLocation" tabIndex="0">
                     <span class="stationName"><span class="visuallyHidden">There is a station</span> Located at ${stationName}</span>
                     <span class="distance"><i class="fas fa-walking"></i><span class="visuallyHidden">The station is</span> Approximately ${Math.round(
                       (dist / 4) * 60
@@ -349,7 +263,7 @@ app.getNumberOfAvailableDocks = function(stationId, stationName, requiredNumberO
                     <a href="https://www.google.com/maps/search/?api=1&query=${endDockLatitude},${endDockLongitude}" class="openInMaps" target="_blank"><i class="fas fa-map-marker-alt"></i> Open in Google Maps</a>
                 </div>
 
-                <div class="endStationDocksAvailable">
+                <div class="endStationDocksAvailable tabIndex="0"">
                     <span class="docksAvailable"><span class="visuallyHidden">There are this many docks available: </span>${individualStation.num_docks_available}</span>
                     <span class="docksAvailableText">Docks Available</span>
                 </div>
@@ -362,8 +276,87 @@ app.getNumberOfAvailableDocks = function(stationId, stationName, requiredNumberO
   });
 };
 
+/* 
+1. The app begins with an event listener. When the user submits the form, we prevent the default action of the form automatically refreshing the page. Then we save the value of all the user's different inputs to variables (their starting location, how many bikes they need, their destination, and how many docks they need). We pass the startingLocation and requiredNumberOfBikes variables to a function called getStartingLocationCoordinates(), and the endLocation and requiredNumberOfDocks variables to a function called getEndLocationCoordinates(). We also remove the class that hides the results.
+
+We keep passing requiredNumberofBikes and requiredNumberOfDocks as arguments/parameters to all the functions we use to find the rest of the data we need because as of now, these variables are scoped to this initial event listener and we want to be able to access them in other places, because it affects the results of what we show the user depending on how many bikes/docks they need and how many are available.
+*/
+
 app.init = function() {
-  console.log("ready");
+  $("form").on("submit", function (e) {
+    e.preventDefault();
+    $(".results").empty();
+    $(".endResults").empty();
+    $(".errorHandling").empty();
+    $(".noBikesError").empty();
+    $(".noDocksError").empty();
+    $("html").animate({
+      scrollTop: $("#toggleResults").offset().top
+    }, 2000);
+  
+    let startingLocation = $(".startingLocationInput").val();
+    let endLocation = $(".endLocationInput").val();
+    let requiredNumberOfBikes = $(".numberOfBikesInput option:selected").val();
+    let requiredNumberOfDocks = $(".numberOfDocksInput option:selected").val();
+    
+    if (startingLocation === "") {
+      let errorMessage = `<span class="errorMessage">Please enter a valid starting location.</span>`;
+      $(".errorHandling").html(errorMessage);
+    }
+  
+    if (endLocation === "") {
+      let errorMessage = `<span class="errorMessage">Please enter a valid destination.</span>`;
+      $(".errorHandling").html(errorMessage);
+    }
+  
+    if (requiredNumberOfBikes === "placeholder") {
+      let errorMessage = `<span class="errorMessage">Please enter the amount of bikes you need.</span>`;
+      $(".errorHandling").html(errorMessage);
+    }
+  
+    if (requiredNumberOfDocks === "placeholder") {
+      let errorMessage = `<span class="errorMessage">Please enter the amount of docks you need.</span>`;
+      $(".errorHandling").html(errorMessage);
+    }
+  
+  
+    if (startingLocation !== "" && endLocation !== "" && requiredNumberOfBikes !== "placeholder" && requiredNumberOfDocks !== "placeholder") {
+      app.getStartingLocationCoordinates(startingLocation, requiredNumberOfBikes);
+      app.getEndLocationCoordinates(endLocation, requiredNumberOfDocks);
+      $(".toggleResultsContainer").removeClass("toggleResultsContainerHideOnLoad");
+  
+      $(".toggleResults").on("click", ".endPointButton", function () {
+        $(".noDocksError").show();
+        $(".startingPointButton").removeClass("activeButton");
+        $(".endPointButton").addClass("activeButton");
+        $(".endResults").addClass("activeResults");
+        $(".results").addClass("inactiveResults");
+        $(".noDocksError").empty();
+        $(".noBikesError").empty();
+        if ($(".endPointButton").hasClass("activeButton") && $(".endResults").is(":empty")) {
+          const endResultsError = `
+          <span>There are no docks available near this location.</span>
+          `
+          $(".noDocksError").append(endResultsError);
+        }
+      });
+      
+      $(".toggleResults").on("click", ".startingPointButton", function () {
+        $(".endPointButton").removeClass("activeButton");
+        $(".startingPointButton").addClass("activeButton");
+        $(".endResults").removeClass("activeResults");
+        $(".results").removeClass("inactiveResults");
+        $(".noBikesError").empty();
+        $(".noDocksError").empty();
+        if ($(".startingPointButton").hasClass("activeButton") && $(".results").is(":empty")) {
+          const resultsError = `
+          <span>There are no bikes available near this location.</span>
+          `
+          $(".noBikesError").append(resultsError);
+        } 
+      })
+    }
+  });
 };
 
 $(document).ready(function() {
