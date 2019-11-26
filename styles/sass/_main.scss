@@ -285,14 +285,28 @@ form {
   display: none;
 }
 
-.errorHandling, .resultsErrorHandling, .endResultsErrorHandling {
+.errorHandling, .resultsErrorHandling, .endResultsErrorHandling, .noBikesError, .noDocksError {
   width: 100%;
+  margin: 100px auto;
+  text-align: center;
+
   span {
-    @include headerText;
+    @include logoText;
     font-size: 2.5rem;
-    text-align: center;
+    letter-spacing: 1px;
     color: $redOrange;
-    display: block;
-    padding-bottom: 100px;
+  }
+}
+
+
+footer {
+  width: 100%;
+  margin: 0 auto;
+  padding: 10px 0;
+  text-align: center;
+  background-color: #a3caa9;
+  small {
+    color: $white;
+    font-size: 1.7rem;
   }
 }

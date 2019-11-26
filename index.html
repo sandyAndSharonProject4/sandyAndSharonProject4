@@ -8,19 +8,19 @@
   <script src="https://kit.fontawesome.com/2a20f3910e.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://use.typekit.net/tuz2inw.css">
   <link rel="stylesheet" href="styles/style.css">
-  <title>Document</title>
+  <title>Beeline | Find a bike share near you</title>
 </head>
 
 <body>
-    <nav class="wrapper">
-      <div class="logo">
-        <a href="#">beeline</a>
-      </div>
-      <div class="navLinks">
-        <a href="#">About</a>
-        <a href="#">Contact</a>
-      </div>
-    </nav>
+  <nav class="wrapper">
+    <div class="logo">
+      <a href="#">beeline</a>
+    </div>
+    <div class="navLinks">
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </div>
+  </nav>
   <header>
 
     <div class="headerTagLine wrapper">
@@ -28,16 +28,14 @@
     </div>
 
     <div class="headerImage">
-        <img src="assets/bike.svg" alt="">
+      <img src="assets/bike.svg" alt="">
     </div>
 
     <div class="headerText wrapper">
       <div class="innerWrapper">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus distinctio reiciendis voluptate qui
-          possimus! Ratione, ipsam fuga, alias tenetur unde amet consequatur necessitatibus rem fugit accusamus deleniti
-          eius consequuntur doloremque?</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa commodi maxime alias veritatis accusantium
-          soluta, ut qui iure voluptas error vel exercitationem aliquam nostrum. Nesciunt dicta quod dolor ea impedit.
+        <p>Beeline is a small web-based app that provides individuals with Toronto’s live bike share information to help users make a beeline for their next destination!</p>
+        <p>Enter your starting location below and how many bikes you will need - it’s great
+        to travel in groups! Afterwards, you’re going to need to park your bike, so don’t forget to enter your destination and the number of spots you will need to find the nearest available docks around your endpoint.
         </p>
       </div>
     </div>
@@ -54,7 +52,8 @@
             <label for="startingLocationInput">
               <h3>Starting Point</h3>
             </label>
-            <input id="startingLocationInput" class="startingLocationInput" placeholder="Enter your starting location" value="">
+            <input id="startingLocationInput" class="startingLocationInput" placeholder="Enter your starting location"
+              value="">
           </div>
           <div class="numberOfBikes">
             <label for="numberOfBikesInput">
@@ -100,7 +99,7 @@
     </section>
 
     <!-- RESULTS SECTION -->
-    <div class="resultsSection"> 
+    <div class="resultsSection">
       <section id="toggleResults" class="toggleResults">
         <div class="toggleResultsContainer toggleResultsContainerHideOnLoad">
           <div class="startingPoint">
@@ -109,23 +108,37 @@
           <div class="endPoint">
             <button class="endPointButton">End Point</button>
           </div>
-  
+
         </div>
       </section>
 
       <section class="errorHandling innerWrapper">
       </section>
-  
+
+
+      <div class="noBikesError">
+                      
+      </div>
+
       <section id="results" class="results innerWrapper activeResults">
+
+
       </section>
+
+      <div class="noDocksError">
+                    
+      </div>
   
+
       <section class="endResults innerWrapper">
+
       </section>
     </div>
 
   </main>
 
-  <footer>im the footer
+  <footer>
+    <small>Copyright &copy; 2019 Sandy Pranjic and Sharon Yi. All Rights Reserved </small>
   </footer>
 
   <script src='https://code.jquery.com/jquery-3.4.0.min.js'

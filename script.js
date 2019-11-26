@@ -76,27 +76,46 @@ $("form").on("submit", function (e) {
     $(".errorHandling").html(errorMessage);
   }
 
+
   if (startingLocation !== "" && endLocation !== "" && requiredNumberOfBikes !== "placeholder" && requiredNumberOfDocks !== "placeholder") {
     app.getStartingLocationCoordinates(startingLocation, requiredNumberOfBikes);
     app.getEndLocationCoordinates(endLocation, requiredNumberOfDocks);
     $(".toggleResultsContainer").removeClass("toggleResultsContainerHideOnLoad");
 
-    $(".toggleResults").on("click", ".endPointButton", function() {
+    $(".toggleResults").on("click", ".endPointButton", function () {
+      $(".noDocksError").show();
       $(".startingPointButton").removeClass("activeButton");
       $(".endPointButton").addClass("activeButton");
       $(".endResults").addClass("activeResults");
       $(".results").addClass("inactiveResults");
+      $(".noDocksError").empty();
+      $(".noBikesError").empty();
+      if ($(".endPointButton").hasClass("activeButton") && $(".endResults").is(":empty")) {
+        const endResultsError = `
+        <span>There are no docks available near this location.</span>
+        `
+        $(".noDocksError").append(endResultsError);
+      }
     });
     
-    $(".toggleResults").on("click", ".startingPointButton", function() {
+    $(".toggleResults").on("click", ".startingPointButton", function () {
       $(".endPointButton").removeClass("activeButton");
       $(".startingPointButton").addClass("activeButton");
       $(".endResults").removeClass("activeResults");
       $(".results").removeClass("inactiveResults");
-    });
-    
+      $(".noBikesError").empty();
+      $(".noDocksError").empty();
+      if ($(".startingPointButton").hasClass("activeButton") && $(".results").is(":empty")) {
+        console.log("hiding the no bikes error");
+        const resultsError = `
+        <span>There are no bikes available near this location.</span>
+        `
+        $(".noBikesError").append(resultsError);
+      } 
+    })
   }
 });
+
 
 /* 
 2. We run two functions called getStartingLocationCoordinates() and getEndLocationCoordinates() to find the longitutde and latitude of both of the user's inputs. These two functions make AJAX calls to the Open Cage Data API. We use the first item in the results array because the API always shows the most relevant match in position 0. We save the values of geometry.lat and geometry.lng properties to variables called searchQueryLatitude and searchQueryLongitude for the starting location. For the end point, we save the values as searchEndQueryLatitude and searchEndQueryLongitude. We then pass these variables to functions called getStartingLocationBikeData() and getEndLocationDockData() respectively.
@@ -214,6 +233,12 @@ app.calculateDistance = function(lat1, lon1, lat2, lon2, unit, stationId, statio
     }
     if (dist <= 0.5) {
       app.getNumberOfAvailableBikes(stationId, eachStationName, requiredNumberOfBikes, dist, lat2, lon2);
+    } else {
+      $(".noBikesError").empty();
+      const resultsError = `
+        <span>There are no bikes available near this location.</span>
+        `
+      $(".noBikesError").append(resultsError);
     }
   }
 };
@@ -244,6 +269,12 @@ app.calculateEndDistance = function(lat1, lon1, lat2, lon2, unit, stationId, end
     }
     if (dist <= 0.5) {
       app.getNumberOfAvailableDocks(stationId, eachEndStationName, requiredNumberOfDocks, dist, lat2, lon2);
+    } else {
+      $(".noDocksError").empty();
+      const endResultsError = `
+        <span>There are no docks available near this location.</span>
+        `
+      $(".noDocksError").append(endResultsError).hide();
     };
   };
 };
@@ -261,6 +292,11 @@ app.getNumberOfAvailableBikes = function(stationId, stationName, requiredNumberO
     stationResults.data.stations.forEach(function(individualStation) {
       let requiredNumberOfBikesInteger = parseInt(requiredNumberOfBikes);
       if (stationId === individualStation.station_id) {
+        $(".noResultsError").empty();
+        const resultsError = `
+        <span>There are no bikes available near this location.</span>
+        `
+        $(".noBikesError").append(resultsError);
         if (requiredNumberOfBikesInteger <= individualStation.num_bikes_available) {
           const startingLocationHtml = `<div class="startingStationContainer">
                 <div class="startingStation">
@@ -279,6 +315,7 @@ app.getNumberOfAvailableBikes = function(stationId, stationName, requiredNumberO
             </div>`;
           //${Math.round(dist * 1000)} to get meters
           $(".results").append(startingLocationHtml);
+          $(".noBikesError").empty();
         }
       }
     });
@@ -294,6 +331,11 @@ app.getNumberOfAvailableDocks = function(stationId, stationName, requiredNumberO
     stationResults.data.stations.forEach(function(individualStation) {
       let requiredNumberOfDocksInteger = parseInt(requiredNumberOfDocks);
       if (stationId === individualStation.station_id) {
+        $(".noDocksError").empty();
+        const endResultsError = `
+        <span>There are no bikes available near this location.</span>
+        `
+        $(".noDocksError").append(endResultsError).hide();
         if (requiredNumberOfDocksInteger <= individualStation.num_docks_available) {
           console.log(`The station is located at ${stationName}. The station ID is ${individualStation.station_id}. We need ${requiredNumberOfDocksInteger} docks, and this station has ${individualStation.num_docks_available} docks.`);
           const endLocationHtml = `
@@ -313,6 +355,7 @@ app.getNumberOfAvailableDocks = function(stationId, stationName, requiredNumberO
                 </div>
             </div>`;
           $(".endResults").append(endLocationHtml);
+          $(".noDocksError").empty();
         };
       };
     });
