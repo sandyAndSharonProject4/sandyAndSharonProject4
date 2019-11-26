@@ -53,7 +53,6 @@ app.getStartingLocationCoordinates = function(query, requiredNumberOfBikes) {
     }
     let searchQueryLatitude = result.results[0].geometry.lat;
     let searchQueryLongitude = result.results[0].geometry.lng;
-    console.log(searchQueryLatitude, searchQueryLongitude);
     app.getStartingLocationBikeData(searchQueryLatitude, searchQueryLongitude, requiredNumberOfBikes);
   });
 };
@@ -90,15 +89,24 @@ app.getStartingLocationBikeData = function(searchQueryLatitude, searchQueryLongi
     method: "GET",
     dataType: "json"
   }).then(function(bikeResult) {
-    // console.log(bikeResult);
-    // console.log(searchQueryLatitude, searchQueryLongitude, bikeResult);
     bikeResult.data.stations.forEach(function(individualStation) {
       let stationId = individualStation.station_id;
       let startingBikeLatitude = individualStation.lat;
       let startingBikeLongitude = individualStation.lon;
       let stationName = individualStation.name;
-      // console.log(stationId, startingBikeLatitude, startingBikeLongitude);
-      app.calculateDistance(searchQueryLatitude, searchQueryLongitude, startingBikeLatitude, startingBikeLongitude, "K", stationId, stationName, requiredNumberOfBikes);
+      const distanceToEachStation = app.calcDistance(searchQueryLatitude, searchQueryLongitude, startingBikeLatitude, startingBikeLongitude, "K");
+      if (distanceToEachStation < 0.5) {
+        app.getNumberOfAvailableBikes(stationId, stationName, requiredNumberOfBikes, distanceToEachStation, startingBikeLatitude,  startingBikeLongitude);
+      } else {
+        $(".noBikesError").empty();
+        const resultsError = `
+          <span>There are no bikes available near this location.</span>
+          `
+        $(".noBikesError").append(resultsError);
+        if ($(".endPointButton").hasClass("activeButton")) {
+          $(".noBikesError").empty();
+        }
+      }
     });
   });
 };
@@ -114,17 +122,28 @@ app.getEndLocationDockData = function(searchEndQueryLatitude, searchEndQueryLong
       let endDockLatitude = individualStation.lat;
       let endDockLongitude = individualStation.lon;
       let stationName = individualStation.name;
-      app.calculateEndDistance(searchEndQueryLatitude, searchEndQueryLongitude, endDockLatitude, endDockLongitude,"K", stationId, stationName, requiredNumberOfDocks);
+      const distanceToEachStation = app.calcDistance(searchEndQueryLatitude, searchEndQueryLongitude, endDockLatitude, endDockLongitude, "K");
+      if (distanceToEachStation <= 0.5) {
+        app.getNumberOfAvailableDocks(stationId, stationName, requiredNumberOfDocks, distanceToEachStation, endDockLatitude, endDockLongitude);
+      } else {
+        $(".noDocksError").empty();
+        const endResultsError = `
+          <span>There are no docks available near this location.</span>
+          `
+        $(".noDocksError").append(endResultsError).hide();
+      };
     });
   });
 };
 
 /* 
-4. calculateDistance() and calculateEndDistance() are functions that are run on the coordinates of every station and either the starting location or end location. It uses a mathematical equation to calculate the distance between two sets of coordinates and return the value in kilometres. At the end of the function, if the difference between the station and the start/end point is 0.5km or less, we pass that station's id to a function called getNumberOfAvailableBikes() or getNumberOfAvailableDocks().
+4. calculateDist() is a reuseable function that runs the coordinates of every station and either the starting location or end location. It uses a mathematical equation to calculate the distance between two sets of coordinates and returns the value in kilometres. This return value is then returned to the function where they were called and saved into a variable.
+
+*** WE DID NOT CREATE THIS MATHEMATICAL EQUATION. We did some research and found a source online: https://www.geodatasource.com/developers/javascript.
+
 */
 
-app.calculateDistance = function(lat1, lon1, lat2, lon2, unit, stationId, stationName, requiredNumberOfBikes) {
-  let eachStationName = stationName;
+app.calcDistance = function(lat1, lon1, lat2, lon2, unit) {
   if (lat1 == lat2 && lon1 == lon2) {
     return 0;
   } else {
@@ -145,51 +164,7 @@ app.calculateDistance = function(lat1, lon1, lat2, lon2, unit, stationId, statio
     if (unit == "N") {
       dist = dist * 0.8684;
     }
-    if (dist <= 0.5) {
-      app.getNumberOfAvailableBikes(stationId, eachStationName, requiredNumberOfBikes, dist, lat2, lon2);
-    } else {
-      $(".noBikesError").empty();
-      const resultsError = `
-        <span>There are no bikes available near this location.</span>
-        `
-      $(".noBikesError").append(resultsError);
-    }
-  }
-};
-
-app.calculateEndDistance = function(lat1, lon1, lat2, lon2, unit, stationId, endStationName, requiredNumberOfDocks) {
-  let eachEndStationName = endStationName;
-  if (lat1 == lat2 && lon1 == lon2) {
-    return 0;
-  } else {
-    let radlat1 = (Math.PI * lat1) / 180;
-    let radlat2 = (Math.PI * lat2) / 180;
-    let theta = lon1 - lon2;
-    let radtheta = (Math.PI * theta) / 180;
-    let dist =
-      Math.sin(radlat1) * Math.sin(radlat2) +
-      Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
-    if (dist > 1) {
-      dist = 1;
-    }
-    dist = Math.acos(dist);
-    dist = (dist * 180) / Math.PI;
-    dist = dist * 60 * 1.1515;
-    if (unit == "K") {
-      dist = dist * 1.609344;
-    }
-    if (unit == "N") {
-      dist = dist * 0.8684;
-    }
-    if (dist <= 0.5) {
-      app.getNumberOfAvailableDocks(stationId, eachEndStationName, requiredNumberOfDocks, dist, lat2, lon2);
-    } else {
-      $(".noDocksError").empty();
-      const endResultsError = `
-        <span>There are no docks available near this location.</span>
-        `
-      $(".noDocksError").append(endResultsError).hide();
-    };
+    return dist;
   };
 };
 
@@ -206,11 +181,14 @@ app.getNumberOfAvailableBikes = function(stationId, stationName, requiredNumberO
     stationResults.data.stations.forEach(function(individualStation) {
       let requiredNumberOfBikesInteger = parseInt(requiredNumberOfBikes);
       if (stationId === individualStation.station_id) {
-        $(".noResultsError").empty();
+        $(".noBikesError").empty();
         const resultsError = `
         <span>There are no bikes available near this location.</span>
         `
         $(".noBikesError").append(resultsError);
+        if ($(".endPointButton").hasClass("activeButton")) {
+          $(".noBikesError").empty();
+        }
         if (requiredNumberOfBikesInteger <= individualStation.num_bikes_available) {
           const startingLocationHtml = `<div class="startingStationContainer">
                 <div class="startingStation">
@@ -251,7 +229,6 @@ app.getNumberOfAvailableDocks = function(stationId, stationName, requiredNumberO
         `
         $(".noDocksError").append(endResultsError).hide();
         if (requiredNumberOfDocksInteger <= individualStation.num_docks_available) {
-          console.log(`The station is located at ${stationName}. The station ID is ${individualStation.station_id}. We need ${requiredNumberOfDocksInteger} docks, and this station has ${individualStation.num_docks_available} docks.`);
           const endLocationHtml = `
             <div class="endStationContainer">
                 <div class="endStation">
