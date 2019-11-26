@@ -105,7 +105,7 @@ header {
       @include smallMobile {
       font-size: 1.8rem;
     }
-    }
+  }
      @include smallMobile {
       margin: 50px auto;
     }
@@ -139,6 +139,7 @@ header {
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    top: 0;
     height: 150px;
     width: 50%;
     a {
