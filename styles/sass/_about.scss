@@ -68,17 +68,22 @@ h3 {
   }
 }
 
-a {
+a.socialMediaLink {
   font-size: 2rem;
   transition: all 0.3s ease;
   padding: 0px 20px;
   position: relative;
   z-index: 10;
+  display: inline-block;
+  @include tablet {
+    padding: 0 40px 0 0;
+  }
   &::after {
     content: "";
     background-color: #DFEDE1;
     height: 10px;
     position: absolute;
+    opacity: 0.3;
     left: 10%;
     bottom: 5px;
     display: none;

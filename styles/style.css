@@ -1136,20 +1136,28 @@ h3 {
   }
 }
 
-a {
+a.socialMediaLink {
   font-size: 2rem;
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
   padding: 0px 20px;
   position: relative;
   z-index: 10;
+  display: inline-block;
 }
 
-a::after {
+@media (max-width: 820px) {
+  a.socialMediaLink {
+    padding: 0 40px 0 0;
+  }
+}
+
+a.socialMediaLink::after {
   content: "";
   background-color: #DFEDE1;
   height: 10px;
   position: absolute;
+  opacity: 0.3;
   left: 10%;
   bottom: 5px;
   display: none;
@@ -1157,22 +1165,22 @@ a::after {
   z-index: -10;
 }
 
-a:hover {
+a.socialMediaLink:hover {
   color: #62a5a3;
   z-index: 10;
 }
 
-a:hover::after {
+a.socialMediaLink:hover::after {
   content: "";
   display: block;
   z-index: -10;
 }
 
-a:hover i {
+a.socialMediaLink:hover i {
   color: #62a5a3;
 }
 
-a i {
+a.socialMediaLink i {
   color: #DFEDE1;
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
